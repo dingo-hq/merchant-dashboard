@@ -19,7 +19,7 @@ const StatsCardList = () => {
             />
             <StatsCard
                 number={100}
-                label="Number of links clicked"
+                label="Recommendations completed"
                 icon={clicksIcon}
             />
             <StatsCard
