@@ -1,0 +1,28 @@
+.card {
+    height: 284px;
+    width: 224px;
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
+    background-color: white;
+    padding: 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.label {
+    margin: 0;
+    color: grey;
+}
+
+.number {
+    display: block;
+    font-weight: bold;
+    font-size: 36px;
+    margin: 16px 0 0 0;
+}
+
+.icon {
+    height: 48px;
+    width: 48px;
+}

@@ -1,12 +1,13 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
+import Main from '../components/Main';
 import styles from './styles.module.css';
 
 function App() {
     return (
         <section className={styles.container}>
             <Sidebar />
-            <main className={styles.main}>Main content</main>
+            <Main />
         </section>
     );
 }
