@@ -5,7 +5,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 64px;
+    width: 96px;
+    position: fixed;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .logo {
@@ -19,4 +22,10 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.mainActions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

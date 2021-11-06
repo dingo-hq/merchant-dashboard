@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardPage from '../../../components/DashboardPage';
 import Setting from '../../../components/Setting';
 import styles from './styles.module.css';
 
@@ -26,7 +27,7 @@ const Settings = (props) => {
     };
 
     return (
-        <main className={styles.main}>
+        <DashboardPage>
             <h1 className={styles.title}>Settings</h1>
             <ul className={styles.container}>
                 {orderedSettings.map(({ name, label }) => (
@@ -39,7 +40,7 @@ const Settings = (props) => {
                     />
                 ))}
             </ul>
-        </main>
+        </DashboardPage>
     );
 };
 
