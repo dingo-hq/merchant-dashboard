@@ -7,7 +7,7 @@ const MyResponsiveLine = () => (
     <div className={styles.graph}>
         <ResponsiveLine
             data={data}
-            margin={{ top: 16, right: 32, bottom: 48, left: 32 }}
+            margin={{ top: 16, right: 128, bottom: 48, left: 48 }}
             xScale={{ type: 'point' }}
             yScale={{
                 type: 'linear',
@@ -70,6 +70,7 @@ const MyResponsiveLine = () => (
                     ],
                 },
             ]}
+            theme={{ fontFamily: 'Sharp Grotesk' }}
         />
     </div>
 );
