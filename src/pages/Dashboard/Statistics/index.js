@@ -7,7 +7,10 @@ import styles from './styles.module.css';
 
 const Statistics = (props) => {
     return (
-        <DashboardPage heading="Statistics">
+        <DashboardPage
+            heading="Statistics"
+            subheading="See how you're doing at a quick glance"
+        >
             <Section title="Today's numbers">
                 <StatsCardList />
             </Section>

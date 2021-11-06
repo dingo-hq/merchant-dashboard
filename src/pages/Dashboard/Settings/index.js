@@ -28,7 +28,10 @@ const Settings = (props) => {
     };
 
     return (
-        <DashboardPage heading="Settings">
+        <DashboardPage
+            heading="Settings"
+            subheading="Modify how Dingo works with your current business"
+        >
             <ul className={styles.container}>
                 <li>
                     <TextInputField
