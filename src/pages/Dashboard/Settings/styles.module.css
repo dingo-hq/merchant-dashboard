@@ -3,3 +3,9 @@
     padding: 72px;
     background-color: #fafafa;
 }
+
+.title {
+    margin: 0;
+    font-size: 48px;
+    font-weight: bold;
+}

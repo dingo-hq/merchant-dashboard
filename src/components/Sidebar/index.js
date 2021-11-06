@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     IconButton,
     CogIcon,
@@ -7,21 +8,26 @@ import {
     Tooltip,
     Position,
 } from 'evergreen-ui';
-import dingoLogo from '../../assets/dingo.svg';
+import dingoLogo from '../../assets/dingo.png';
 import styles from './styles.module.css';
 
 const Sidebar = () => {
+    const navigate = useNavigate();
+
     return (
         <nav className={styles.nav}>
             <div className={styles.mainActions}>
                 <img className={styles.logo} src={dingoLogo} />
                 <ul className={styles.navItems}>
                     <li>
-                        <Tooltip content="Dashboard" position={Position.RIGHT}>
+                        <Tooltip content="Statistics" position={Position.RIGHT}>
                             <IconButton
                                 icon={GridViewIcon}
                                 appearance="minimal"
                                 size="large"
+                                onClick={() => {
+                                    navigate('/dashboard/stats');
+                                }}
                             />
                         </Tooltip>
                     </li>
@@ -31,6 +37,9 @@ const Sidebar = () => {
                                 icon={CogIcon}
                                 appearance="minimal"
                                 size="large"
+                                onClick={() => {
+                                    navigate('/dashboard/settings');
+                                }}
                             />
                         </Tooltip>
                     </li>
