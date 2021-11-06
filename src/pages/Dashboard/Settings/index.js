@@ -30,13 +30,13 @@ const Settings = (props) => {
     return (
         <DashboardPage
             heading="Settings"
-            subheading="Modify how Dingo works with your current business"
+            subheading="Make changes to how Dingo works with your current business and customers"
         >
             <ul className={styles.container}>
                 <li>
                     <TextInputField
                         label="Promotional discount (%)"
-                        description="The value of the promotion code that appears after the user submits a recommendation"
+                        description="The promotion code value that appears after a user selects and submits a recommended item from a recommendation link"
                         type="number"
                         min={0}
                     />
