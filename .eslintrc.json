@@ -18,14 +18,14 @@
     },
     "plugins": ["react", "prettier"],
     "rules": {
-        "semi": ["error", "always"],
-        "comma-dangle": ["error", "always-multiline"],
-        "space-before-function-paren": ["error", {
+        "semi": ["warn", "always"],
+        "comma-dangle": ["warn", "always-multiline"],
+        "space-before-function-paren": ["warn", {
             "anonymous": "never",
             "named": "never",
             "asyncArrow": "always"
         }],
-        "react/require-default-props": "error",
+        "react/require-default-props": "warn",
         "import/order": "warn",
         "no-unused-vars": "warn",
         "multiline-ternary": "off",
