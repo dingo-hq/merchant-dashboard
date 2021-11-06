@@ -1,6 +1,6 @@
 import React from 'react';
-import clicksIcon from '../../../assets/clicks.svg';
-import starIcon from '../../../assets/star.svg';
+import clicksIcon from '../../assets/clicks.svg';
+import starIcon from '../../assets/star.svg';
 import StatsCard from './StatsCard';
 import styles from './styles.module.css';
 

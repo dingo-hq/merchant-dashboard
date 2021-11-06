@@ -1,3 +1,4 @@
+import { TextInputField } from 'evergreen-ui';
 import React, { useState } from 'react';
 import DashboardPage from '../../../components/DashboardPage';
 import Setting from '../../../components/Setting';
@@ -30,6 +31,14 @@ const Settings = (props) => {
         <DashboardPage>
             <h1 className={styles.title}>Settings</h1>
             <ul className={styles.container}>
+                <li>
+                    <TextInputField
+                        label="Promotional discount (%)"
+                        description="The value of the promotion code that appears after the user selects a recommendation"
+                        type="number"
+                        min={0}
+                    />
+                </li>
                 {orderedSettings.map(({ name, label }) => (
                     <Setting
                         key={name}
