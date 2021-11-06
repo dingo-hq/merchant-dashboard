@@ -23,14 +23,14 @@ const Navigation = () => {
             label: 'Statistics',
         },
         {
-            icon: CogIcon,
-            path: '/dashboard/settings',
-            label: 'Settings',
-        },
-        {
             icon: ThListIcon,
             path: '/dashboard/recommendation-inventory',
             label: 'Recommendation Inventory',
+        },
+        {
+            icon: CogIcon,
+            path: '/dashboard/settings',
+            label: 'Settings',
         },
     ];
 
