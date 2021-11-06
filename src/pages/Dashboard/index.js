@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
+import Navigation from '../../components/Navigation';
 import styles from './styles.module.css';
 import Statistics from './Statistics';
 import Settings from './Settings';
@@ -8,7 +8,7 @@ import Settings from './Settings';
 const Dashboard = () => {
     return (
         <section className={styles.container}>
-            <Sidebar />
+            <Navigation />
             <Routes>
                 <Route path="/" element={<Navigate to="stats" />} />
                 <Route path="stats" element={<Statistics />} />

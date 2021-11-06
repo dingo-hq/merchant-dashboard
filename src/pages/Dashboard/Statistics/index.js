@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Section from '../../../components/Section';
 import StatsCardList from '../../../components/Main/StatsCardList';
 import LineGraph from '../../../components/LineGraph';

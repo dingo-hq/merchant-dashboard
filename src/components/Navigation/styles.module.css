@@ -1,31 +1,36 @@
 .nav {
-    padding: 32px;
+    padding: 8px 72px;
     background-color: white;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 96px;
+    width: 100%;
+    height: 72px;
     position: fixed;
-    height: 100%;
     box-sizing: border-box;
 }
 
 .logo {
-    width: 48px;
+    height: 32px;
 }
 
 .navItems {
     list-style: none;
     padding: 0;
-    margin: 64px 0 0 0;
+    margin: 0 0 0 32px;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.item {
+    font-weight: bold;
 }
 
 .mainActions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }

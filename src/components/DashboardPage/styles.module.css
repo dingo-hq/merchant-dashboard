@@ -1,6 +1,6 @@
 .page {
     flex: 1;
-    padding: 72px 72px 72px 168px;
+    padding: 144px 72px 72px 72px;
     box-sizing: border-box;
     background-color: #fafafa;
 }
