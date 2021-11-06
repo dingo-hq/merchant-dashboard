@@ -33,7 +33,7 @@ const Settings = (props) => {
                 <li>
                     <TextInputField
                         label="Promotional discount (%)"
-                        description="The value of the promotion code that appears after the user selects a recommendation"
+                        description="The value of the promotion code that appears after the user submits a recommendation"
                         type="number"
                         min={0}
                     />
