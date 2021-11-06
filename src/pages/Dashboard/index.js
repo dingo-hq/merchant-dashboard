@@ -4,6 +4,7 @@ import Navigation from '../../components/Navigation';
 import styles from './styles.module.css';
 import Statistics from './Statistics';
 import Settings from './Settings';
+import RecommendationInventory from './RecommendationInventory';
 
 const Dashboard = () => {
     return (
@@ -13,6 +14,10 @@ const Dashboard = () => {
                 <Route path="/" element={<Navigate to="stats" />} />
                 <Route path="stats" element={<Statistics />} />
                 <Route path="settings" element={<Settings />} />
+                <Route
+                    path="recommendation-inventory"
+                    element={<RecommendationInventory />}
+                />
             </Routes>
         </section>
     );

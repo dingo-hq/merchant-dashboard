@@ -28,8 +28,7 @@ const Settings = (props) => {
     };
 
     return (
-        <DashboardPage>
-            <h1 className={styles.title}>Settings</h1>
+        <DashboardPage heading="Settings">
             <ul className={styles.container}>
                 <li>
                     <TextInputField

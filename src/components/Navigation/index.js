@@ -1,6 +1,12 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CogIcon, LogOutIcon, GridViewIcon, Button } from 'evergreen-ui';
+import {
+    CogIcon,
+    LogOutIcon,
+    ThListIcon,
+    GridViewIcon,
+    Button,
+} from 'evergreen-ui';
 import classNames from 'classnames';
 import logo from '../../assets/logo.png';
 import styles from './styles.module.css';
@@ -20,6 +26,11 @@ const Navigation = () => {
             icon: CogIcon,
             path: '/dashboard/settings',
             label: 'Settings',
+        },
+        {
+            icon: ThListIcon,
+            path: '/dashboard/recommendation-inventory',
+            label: 'Recommendation Inventory',
         },
     ];
 

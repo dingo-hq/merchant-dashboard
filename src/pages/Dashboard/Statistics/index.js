@@ -7,8 +7,7 @@ import styles from './styles.module.css';
 
 const Statistics = (props) => {
     return (
-        <DashboardPage>
-            <h1 className={styles.title}>Statistics</h1>
+        <DashboardPage heading="Statistics">
             <Section title="Today's numbers">
                 <StatsCardList />
             </Section>

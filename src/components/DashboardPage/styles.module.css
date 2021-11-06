@@ -4,3 +4,9 @@
     box-sizing: border-box;
     background-color: #fafafa;
 }
+
+.heading {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
