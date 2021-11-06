@@ -1,8 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Table, IconButton, TrashIcon } from 'evergreen-ui';
 import DashboardPage from '../../../components/DashboardPage';
 import styles from './styles.module.css';
+
+const data = [
+    {
+        item: 'Matcha Milk Tea',
+        recommendedCount: 100,
+        selectedCount: 100,
+    },
+    {
+        item: 'Horchata Milk Tea',
+        recommendedCount: 100,
+        selectedCount: 100,
+    },
+    {
+        item: 'Thai Milk Tea',
+        recommendedCount: 100,
+        selectedCount: 100,
+    },
+    {
+        item: 'Panda Milk Tea',
+        recommendedCount: 100,
+        selectedCount: 100,
+    },
+];
 
 const RecommendationInventory = (props) => {
     return (
@@ -21,54 +43,24 @@ const RecommendationInventory = (props) => {
                     </Table.HeaderCell>
                 </Table.Head>
                 <Table.Body>
-                    <Table.Row>
-                        <Table.TextCell>Matcha Milk Tea</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.Cell justifyContent="flex-end">
-                            <IconButton
-                                icon={TrashIcon}
-                                appearance="minimal"
-                                intent="danger"
-                            />
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.TextCell>Thai Milk Tea</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.Cell justifyContent="flex-end">
-                            <IconButton
-                                icon={TrashIcon}
-                                appearance="minimal"
-                                intent="danger"
-                            />
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.TextCell>Horchata Milk Tea</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.Cell justifyContent="flex-end">
-                            <IconButton
-                                icon={TrashIcon}
-                                appearance="minimal"
-                                intent="danger"
-                            />
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.TextCell>Panda Milk Tea</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.TextCell isNumber>100</Table.TextCell>
-                        <Table.Cell justifyContent="flex-end">
-                            <IconButton
-                                icon={TrashIcon}
-                                appearance="minimal"
-                                intent="danger"
-                            />
-                        </Table.Cell>
-                    </Table.Row>
+                    {data.map(({ item, recommendedCount, selectedCount }) => (
+                        <Table.Row key={item}>
+                            <Table.TextCell>{item}</Table.TextCell>
+                            <Table.TextCell isNumber>
+                                {recommendedCount}
+                            </Table.TextCell>
+                            <Table.TextCell isNumber>
+                                {selectedCount}
+                            </Table.TextCell>
+                            <Table.Cell justifyContent="flex-end">
+                                <IconButton
+                                    icon={TrashIcon}
+                                    appearance="minimal"
+                                    intent="danger"
+                                />
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
                 </Table.Body>
             </Table>
         </DashboardPage>
