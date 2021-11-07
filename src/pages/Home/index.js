@@ -11,12 +11,12 @@ const navItems = [
     {
         icon: ShopIcon,
         label: 'How it Works',
-        path: '/',
+        path: '',
     },
     {
         icon: PropertiesIcon,
         label: 'Features',
-        path: '/',
+        path: '',
     },
 ];
 
@@ -51,6 +51,44 @@ const Home = () => {
                 </div>
                 <div className={styles.illustrationContainer}>
                     <img className={styles.illustration} src={business} />
+                </div>
+            </section>
+            <section className={styles.howItWorks}>
+                <h2 className={styles.sectionTitle}>How it Works</h2>
+                <div className={styles.steps}>
+                    <div className={styles.step}>
+                        <h3 className={styles.stepLabel}>
+                            Connect Dingo with your Square account
+                        </h3>
+                        <p className={styles.stepDescription}>
+                            Start off by connecting Dingo with your Square
+                            account. We&apos;ll analyze your inventory so
+                            customers can make informed decisions based off
+                            recommendations given to them.
+                        </p>
+                    </div>
+                    <div className={styles.step}>
+                        <h3 className={styles.stepLabel}>
+                            Manage recommendations
+                        </h3>
+                        <p className={styles.stepDescription}>
+                            Take control of what gets recommended all inside the
+                            Dingo dashboard. Want to take a pause? Turn off all
+                            recommendations until you&apos;re ready to get back
+                            on again.
+                        </p>
+                    </div>
+                    <div className={styles.step}>
+                        <h3 className={styles.stepLabel}>
+                            Watch customers come back again... and again!
+                        </h3>
+                        <p className={styles.stepDescription}>
+                            Gain insight into how Dingo is impacting your
+                            business. Whether it&apos;s visualizing trends over
+                            time or recording your conversion rates, we have the
+                            numbers for you.
+                        </p>
+                    </div>
                 </div>
             </section>
         </section>

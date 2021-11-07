@@ -42,3 +42,47 @@
 .description {
     margin: 0;
 }
+
+.landing {
+    min-height: 100vh;
+}
+
+.howItWorks {
+    background-color: #FDE5E3;
+    padding: 48px 256px;
+    box-sizing: border-box;
+}
+
+.sectionTitle {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin: 32px 0 0 0;
+}
+
+.step {
+    /* height: 384px; */
+    flex: 1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stepLabel {
+    margin: 0;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.stepDescription {
+    margin: 0;
+}
