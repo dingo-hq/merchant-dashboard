@@ -5,6 +5,9 @@ import PrimaryButton from '../../components/PrimaryButton';
 import SquareLogo from '../../components/SquareLogo';
 import { SQUARE_OAUTH_LINK } from '../../constants';
 import business from '../../assets/business.svg';
+import shoppingBags from '../../assets/shopping-bags.svg';
+import priceTag from '../../assets/price-tag.svg';
+import cart from '../../assets/cart.svg';
 import styles from './styles.module.css';
 
 const navItems = [
@@ -57,6 +60,7 @@ const Home = () => {
                 <h2 className={styles.sectionTitle}>How it Works</h2>
                 <div className={styles.steps}>
                     <div className={styles.step}>
+                        <img className={styles.stepImage} src={cart} />
                         <h3 className={styles.stepLabel}>
                             Connect Dingo with your Square account
                         </h3>
@@ -67,7 +71,8 @@ const Home = () => {
                             recommendations given to them.
                         </p>
                     </div>
-                    <div className={styles.step}>
+                    <figure className={styles.step}>
+                        <img className={styles.stepImage} src={priceTag} />
                         <h3 className={styles.stepLabel}>
                             Manage recommendations
                         </h3>
@@ -77,8 +82,9 @@ const Home = () => {
                             recommendations until you&apos;re ready to get back
                             on again.
                         </p>
-                    </div>
-                    <div className={styles.step}>
+                    </figure>
+                    <figure className={styles.step}>
+                        <img className={styles.stepImage} src={shoppingBags} />
                         <h3 className={styles.stepLabel}>
                             Watch customers come back again... and again!
                         </h3>
@@ -88,7 +94,7 @@ const Home = () => {
                             time or recording your conversion rates, we have the
                             numbers for you.
                         </p>
-                    </div>
+                    </figure>
                 </div>
             </section>
         </section>

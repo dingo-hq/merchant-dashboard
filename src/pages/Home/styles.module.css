@@ -69,6 +69,7 @@
 
 .step {
     /* height: 384px; */
+    margin: 0;
     flex: 1;
     border-radius: 4px;
     box-sizing: border-box;
@@ -85,4 +86,9 @@
 
 .stepDescription {
     margin: 0;
+}
+
+.stepImage {
+    width: 40%;
+    margin: 0 auto;
 }
