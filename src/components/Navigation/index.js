@@ -36,7 +36,13 @@ const Navigation = () => {
 
     return (
         <nav className={styles.nav}>
-            <img className={styles.logo} src={logo} />
+            <img
+                className={styles.logo}
+                src={logo}
+                onClick={() => {
+                    window.location.href = '/';
+                }}
+            />
             <ul className={styles.navItems}>
                 {navItems.map(({ icon, path, label }) => (
                     <Button

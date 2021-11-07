@@ -16,6 +16,10 @@
     height: 32px;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 .navItems {
     list-style: none;
     padding: 0;
