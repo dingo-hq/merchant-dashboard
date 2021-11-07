@@ -1,15 +1,16 @@
 import { TextInputField } from 'evergreen-ui';
 import React, { useState } from 'react';
 import DashboardPage from '../../../components/DashboardPage';
-import Setting from '../../../components/Setting';
+import Toggle from '../../../components/Toggle';
 import styles from './styles.module.css';
 
 const ENABLE_RECOMMENDATIONS = 'enableRecommendations';
 
-const orderedSettings = [
+const toggles = [
     {
         name: ENABLE_RECOMMENDATIONS,
-        label: 'Send item recommendations after a customer makes a purchase',
+        label: 'Enable Dingo',
+        note: 'Turning this OFF means customers will no longer receive recommendation links following a purchase.',
     },
 ];
 
@@ -43,12 +44,13 @@ const Settings = (props) => {
                         max={100}
                     />
                 </li>
-                {orderedSettings.map(({ name, label }) => (
-                    <Setting
+                {toggles.map(({ name, label, note }) => (
+                    <Toggle
                         key={name}
                         checked={settings[name]}
                         name={name}
                         label={label}
+                        note={note}
                         onChange={handleSettingChange}
                     />
                 ))}
