@@ -39,7 +39,7 @@ const Navigation = ({ navItems, showLogOut }) => {
                     </Button>
                 ))}
             </ul>
-            {showLogOut ? (
+            {showLogOut && (
                 <Button
                     iconBefore={LogOutIcon}
                     appearance="minimal"
@@ -48,8 +48,6 @@ const Navigation = ({ navItems, showLogOut }) => {
                 >
                     Log out
                 </Button>
-            ) : (
-                <div />
             )}
         </nav>
     );

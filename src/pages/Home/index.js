@@ -1,10 +1,24 @@
 import React from 'react';
+import { PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
 import SquareLogo from '../../components/SquareLogo';
 import { SQUARE_OAUTH_LINK } from '../../constants';
 import business from '../../assets/business.svg';
 import styles from './styles.module.css';
+
+const navItems = [
+    {
+        icon: ShopIcon,
+        label: 'How it Works',
+        path: '/',
+    },
+    {
+        icon: PropertiesIcon,
+        label: 'Features',
+        path: '/',
+    },
+];
 
 const Home = () => {
     const handleConnectClick = () => {
@@ -14,7 +28,7 @@ const Home = () => {
     return (
         <section className={styles.container}>
             <header>
-                <Navigation showLogOut={false} />
+                <Navigation navItems={navItems} showLogOut={false} />
             </header>
             <section className={styles.landing}>
                 <div className={styles.content}>
