@@ -36,28 +36,26 @@ const Navigation = () => {
 
     return (
         <nav className={styles.nav}>
-            <div className={styles.mainActions}>
-                <img className={styles.logo} src={logo} />
-                <ul className={styles.navItems}>
-                    {navItems.map(({ icon, path, label }) => (
-                        <Button
-                            size="large"
-                            appearance="minimal"
-                            className={classNames(
-                                styles.item,
-                                pathname === path && styles.active,
-                            )}
-                            key={path}
-                            iconBefore={icon}
-                            onClick={() => {
-                                navigate(path);
-                            }}
-                        >
-                            {label}
-                        </Button>
-                    ))}
-                </ul>
-            </div>
+            <img className={styles.logo} src={logo} />
+            <ul className={styles.navItems}>
+                {navItems.map(({ icon, path, label }) => (
+                    <Button
+                        size="large"
+                        appearance="minimal"
+                        className={classNames(
+                            styles.item,
+                            pathname === path && styles.active,
+                        )}
+                        key={path}
+                        iconBefore={icon}
+                        onClick={() => {
+                            navigate(path);
+                        }}
+                    >
+                        {label}
+                    </Button>
+                ))}
+            </ul>
             <Button
                 iconBefore={LogOutIcon}
                 appearance="minimal"
