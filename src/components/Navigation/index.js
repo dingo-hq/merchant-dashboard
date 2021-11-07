@@ -4,7 +4,7 @@ import {
     CogIcon,
     LogOutIcon,
     ThListIcon,
-    GridViewIcon,
+    TimelineLineChartIcon,
     Button,
 } from 'evergreen-ui';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ const Navigation = () => {
 
     const navItems = [
         {
-            icon: GridViewIcon,
+            icon: TimelineLineChartIcon,
             path: '/dashboard/stats',
             label: 'Statistics',
         },
