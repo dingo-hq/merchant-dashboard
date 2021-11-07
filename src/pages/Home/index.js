@@ -1,5 +1,6 @@
 import React from 'react';
 import PrimaryButton from '../../components/PrimaryButton';
+import SquareLogo from '../../components/SquareLogo';
 import { SQUARE_OAUTH_LINK } from '../../constants';
 import styles from './styles.module.css';
 
@@ -9,15 +10,16 @@ const Home = () => {
     };
 
     return (
-        <section className={styles.container}>
+        <main className={styles.container}>
             <PrimaryButton
                 onClick={handleConnectClick}
                 size="large"
                 className={styles.connect}
+                iconBefore={SquareLogo}
             >
                 Connect with Square
             </PrimaryButton>
-        </section>
+        </main>
     );
 };
 
