@@ -31,6 +31,7 @@ const Settings = (props) => {
         <DashboardPage
             heading="Settings"
             subheading="Make changes to how Dingo works with your current business and customers"
+            className={styles.page}
         >
             <ul className={styles.container}>
                 <li>
@@ -39,6 +40,7 @@ const Settings = (props) => {
                         description="The promotion code value that appears after a user selects and submits a recommended item from a recommendation link"
                         type="number"
                         min={0}
+                        max={100}
                     />
                 </li>
                 {orderedSettings.map(({ name, label }) => (
@@ -51,6 +53,7 @@ const Settings = (props) => {
                     />
                 ))}
             </ul>
+            <div className={styles.right} />
         </DashboardPage>
     );
 };

@@ -3,6 +3,8 @@
     padding: 144px 72px 72px 72px;
     box-sizing: border-box;
     background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
 }
 
 .heading {
