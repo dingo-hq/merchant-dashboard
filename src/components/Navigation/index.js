@@ -1,38 +1,15 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-    CogIcon,
-    LogOutIcon,
-    ThListIcon,
-    TimelineLineChartIcon,
-    Button,
-} from 'evergreen-ui';
+import { LogOutIcon, Button } from 'evergreen-ui';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import logo from '../../assets/logo.png';
 import styles from './styles.module.css';
 
-const Navigation = () => {
+const Navigation = ({ navItems, showLogOut }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { pathname } = location;
-
-    const navItems = [
-        {
-            icon: TimelineLineChartIcon,
-            path: '/dashboard/stats',
-            label: 'Statistics',
-        },
-        {
-            icon: ThListIcon,
-            path: '/dashboard/recommendation-inventory',
-            label: 'Recommendation Inventory',
-        },
-        {
-            icon: CogIcon,
-            path: '/dashboard/settings',
-            label: 'Settings',
-        },
-    ];
 
     return (
         <nav className={styles.nav}>
@@ -62,16 +39,36 @@ const Navigation = () => {
                     </Button>
                 ))}
             </ul>
-            <Button
-                iconBefore={LogOutIcon}
-                appearance="minimal"
-                size="large"
-                className={styles.item}
-            >
-                Log out
-            </Button>
+            {showLogOut ? (
+                <Button
+                    iconBefore={LogOutIcon}
+                    appearance="minimal"
+                    size="large"
+                    className={styles.item}
+                >
+                    Log out
+                </Button>
+            ) : (
+                <div />
+            )}
         </nav>
     );
+};
+
+Navigation.propTypes = {
+    navItems: PropTypes.arrayOf(
+        PropTypes.shape({
+            icon: PropTypes.element.isRequired,
+            label: PropTypes.string.isRequired,
+            path: PropTypes.string.isRequired,
+        }),
+    ),
+    showLogOut: PropTypes.bool,
+};
+
+Navigation.defaultProps = {
+    navItems: [],
+    showLogOut: true,
 };
 
 export default Navigation;
