@@ -8,7 +8,7 @@ const Statistics = (props) => {
     return (
         <DashboardPage
             heading="Statistics"
-            subheading="See how you're doing at a quick glance"
+            subheading="Take a peek at some numbers and see how you're doing at a quick glance"
         >
             <Section title="Today's numbers">
                 <StatsCardList />
