@@ -4,18 +4,18 @@ import DashboardPage from '../../../components/DashboardPage';
 import Toggle from '../../../components/Toggle';
 import styles from './styles.module.css';
 
-const ENABLE_RECOMMENDATIONS = 'enableRecommendations';
+const PAUSE_DINGO = 'pauseDingo';
 
 const toggles = [
     {
-        name: ENABLE_RECOMMENDATIONS,
-        label: 'Enable Dingo',
-        note: 'Turning this OFF means customers will no longer receive recommendation links following a purchase.',
+        name: PAUSE_DINGO,
+        label: 'Pause Dingo',
+        note: 'Turning this ON means customers will stop receiving recommendation links following a purchase until this is turned back OFF.',
     },
 ];
 
 const initialSettings = {
-    [ENABLE_RECOMMENDATIONS]: true,
+    [PAUSE_DINGO]: false,
 };
 
 const Settings = (props) => {
@@ -44,7 +44,7 @@ const Settings = (props) => {
                         max={100}
                     />
                 </li>
-                {toggles.map(({ name, label, note }) => (
+                {toggles.map(({ name, label, note, intent }) => (
                     <Toggle
                         key={name}
                         checked={settings[name]}
@@ -52,6 +52,7 @@ const Settings = (props) => {
                         label={label}
                         note={note}
                         onChange={handleSettingChange}
+                        className={styles.toggle}
                     />
                 ))}
             </ul>
