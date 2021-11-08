@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Table, IconButton, TrashIcon, Dialog, toaster } from 'evergreen-ui';
+import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
 import styles from './styles.module.css';
 
-const data = [
+const inventoryItems = [
     {
         item: 'Matcha Milk Tea',
         recommendedCount: 100,
@@ -26,8 +27,14 @@ const data = [
     },
 ];
 
+const fuse = new Fuse(inventoryItems, {
+    threshold: 0.25,
+    keys: ['item'],
+});
+
 const RecommendationInventory = (props) => {
     const [itemToBeDeleted, setItemToBeDeleted] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
 
     const handleRemove = (item) => {
         // Happy path
@@ -37,6 +44,14 @@ const RecommendationInventory = (props) => {
         );
     };
 
+    const filteredInventoryItems = useMemo(
+        () =>
+            searchValue
+                ? fuse.search(searchValue).map(({ item }) => item)
+                : inventoryItems,
+        [searchValue],
+    );
+
     return (
         <DashboardPage
             heading="Recommendation Inventory"
@@ -44,7 +59,10 @@ const RecommendationInventory = (props) => {
         >
             <Table className={styles.table}>
                 <Table.Head>
-                    <Table.SearchHeaderCell />
+                    <Table.SearchHeaderCell
+                        onChange={(value) => setSearchValue(value)}
+                        placeholder="Search inventory items"
+                    />
                     <Table.HeaderCell>
                         Number of Times Recommended
                     </Table.HeaderCell>
@@ -56,25 +74,27 @@ const RecommendationInventory = (props) => {
                     </Table.HeaderCell>
                 </Table.Head>
                 <Table.Body>
-                    {data.map(({ item, recommendedCount, selectedCount }) => (
-                        <Table.Row key={item}>
-                            <Table.TextCell>{item}</Table.TextCell>
-                            <Table.TextCell isNumber>
-                                {recommendedCount}
-                            </Table.TextCell>
-                            <Table.TextCell isNumber>
-                                {selectedCount}
-                            </Table.TextCell>
-                            <Table.Cell justifyContent="flex-end">
-                                <IconButton
-                                    icon={TrashIcon}
-                                    appearance="minimal"
-                                    intent="danger"
-                                    onClick={() => setItemToBeDeleted(item)}
-                                />
-                            </Table.Cell>
-                        </Table.Row>
-                    ))}
+                    {filteredInventoryItems.map(
+                        ({ item, recommendedCount, selectedCount }) => (
+                            <Table.Row key={item}>
+                                <Table.TextCell>{item}</Table.TextCell>
+                                <Table.TextCell isNumber>
+                                    {recommendedCount}
+                                </Table.TextCell>
+                                <Table.TextCell isNumber>
+                                    {selectedCount}
+                                </Table.TextCell>
+                                <Table.Cell justifyContent="flex-end">
+                                    <IconButton
+                                        icon={TrashIcon}
+                                        appearance="minimal"
+                                        intent="danger"
+                                        onClick={() => setItemToBeDeleted(item)}
+                                    />
+                                </Table.Cell>
+                            </Table.Row>
+                        ),
+                    )}
                 </Table.Body>
             </Table>
             <Dialog
