@@ -1,7 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { Table, IconButton, TrashIcon, Dialog, toaster } from 'evergreen-ui';
+import {
+    Table,
+    IconButton,
+    TrashIcon,
+    Dialog,
+    toaster,
+    PlusIcon,
+    Button,
+} from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
+import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const inventoryItems = [
@@ -35,14 +44,17 @@ const fuse = new Fuse(inventoryItems, {
 const RecommendationInventory = (props) => {
     const [itemToBeDeleted, setItemToBeDeleted] = useState(null);
     const [searchValue, setSearchValue] = useState('');
+    const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-    const handleRemove = (item) => {
+    const handleRemoveItem = (item) => {
         // Happy path
         setItemToBeDeleted(null);
         toaster.success(
             `${item} was successfully removed from your recommendation inventory.`,
         );
     };
+
+    const handleAddItem = () => {};
 
     const filteredInventoryItems = useMemo(
         () =>
@@ -56,6 +68,16 @@ const RecommendationInventory = (props) => {
         <DashboardPage
             heading="Recommendation Inventory"
             subheading="Items listed here may appear as a recommended item for customers who receive a recommendation link"
+            interactionElement={
+                <Button
+                    size="large"
+                    iconBefore={PlusIcon}
+                    onClick={() => setShowAddItemModal(true)}
+                    appearance="primary"
+                >
+                    Add Item
+                </Button>
+            }
         >
             <Table className={styles.table}>
                 <Table.Head>
@@ -101,7 +123,7 @@ const RecommendationInventory = (props) => {
                 isShown={!!itemToBeDeleted}
                 title="Remove item"
                 onCloseComplete={() => setItemToBeDeleted(null)}
-                onConfirm={() => handleRemove(itemToBeDeleted)}
+                onConfirm={() => handleRemoveItem(itemToBeDeleted)}
                 confirmLabel="Remove"
                 intent="danger"
             >
@@ -111,6 +133,16 @@ const RecommendationInventory = (props) => {
                 <span className={styles.note}>
                     Note: it will still be kept in your original inventory.
                 </span>
+            </Dialog>
+            <Dialog
+                isShown={showAddItemModal}
+                title="Add item"
+                onCloseComplete={() => setShowAddItemModal(false)}
+                onConfirm={handleAddItem}
+                confirmLabel="Submit"
+            >
+                Add an item from your existing inventory below to the
+                recommendation inventory.
             </Dialog>
         </DashboardPage>
     );

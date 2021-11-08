@@ -7,6 +7,12 @@
     flex-direction: column;
 }
 
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
 .heading {
     margin: 0;
     font-size: 32px;
