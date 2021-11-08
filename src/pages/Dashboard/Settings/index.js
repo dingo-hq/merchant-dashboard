@@ -10,7 +10,7 @@ const toggles = [
     {
         name: PAUSE_DINGO,
         label: 'Pause Dingo',
-        note: 'Turning this ON means customers will stop receiving recommendation links following a purchase until this is turned back OFF.',
+        note: 'Turning this setting ON means customers will stop receiving recommendation links following a purchase until this setting is turned OFF.',
     },
 ];
 

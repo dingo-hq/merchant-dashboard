@@ -7,9 +7,8 @@ const DashboardPage = ({
     heading,
     subheading,
     className,
-    interactionElement,
+    sideElement,
 }) => {
-    console.log('interactionElement', interactionElement);
     return (
         <main className={styles.page}>
             <header className={styles.header}>
@@ -17,7 +16,7 @@ const DashboardPage = ({
                     <h1 className={styles.heading}>{heading}</h1>
                     <h2 className={styles.subheading}>{subheading}</h2>
                 </section>
-                {interactionElement}
+                {sideElement}
             </header>
             <section className={className}>{children}</section>
         </main>
@@ -29,13 +28,13 @@ DashboardPage.propTypes = {
     heading: PropTypes.string.isRequired,
     subheading: PropTypes.string,
     className: PropTypes.string,
-    interactionElement: PropTypes.element,
+    sideElement: PropTypes.element,
 };
 
 DashboardPage.defaultProps = {
     subheading: null,
     className: null,
-    interactionElement: null,
+    sideElement: null,
 };
 
 export default DashboardPage;

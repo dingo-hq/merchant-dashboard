@@ -10,7 +10,6 @@ import {
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
-import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const inventoryItems = [
@@ -68,7 +67,7 @@ const RecommendationInventory = (props) => {
         <DashboardPage
             heading="Recommendation Inventory"
             subheading="Items listed here may appear as a recommended item for customers who receive a recommendation link"
-            interactionElement={
+            sideElement={
                 <Button
                     size="large"
                     iconBefore={PlusIcon}
