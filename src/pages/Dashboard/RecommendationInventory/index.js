@@ -7,6 +7,8 @@ import {
     toaster,
     PlusIcon,
     Button,
+    EmptyState,
+    SearchIcon,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
@@ -65,6 +67,39 @@ const RecommendationInventory = (props) => {
         [searchValue],
     );
 
+    const renderTableBody = () => {
+        if (filteredInventoryItems.length === 0) {
+            return (
+                <EmptyState
+                    background="light"
+                    title={`No items found for "${searchValue}"`}
+                    orientation="horizontal"
+                    icon={<SearchIcon color="#C1C4D6" />}
+                    iconBgColor="#EDEFF5"
+                    description="Uh-oh, we had a hard time finding your item, try searching for something else!"
+                />
+            );
+        }
+
+        return filteredInventoryItems.map(
+            ({ item, recommendedCount, selectedCount }) => (
+                <Table.Row key={item}>
+                    <Table.TextCell>{item}</Table.TextCell>
+                    <Table.TextCell isNumber>{recommendedCount}</Table.TextCell>
+                    <Table.TextCell isNumber>{selectedCount}</Table.TextCell>
+                    <Table.Cell justifyContent="flex-end">
+                        <IconButton
+                            icon={TrashIcon}
+                            appearance="minimal"
+                            intent="danger"
+                            onClick={() => setItemToBeDeleted(item)}
+                        />
+                    </Table.Cell>
+                </Table.Row>
+            ),
+        );
+    };
+
     return (
         <DashboardPage
             heading="Recommendation Inventory"
@@ -96,29 +131,7 @@ const RecommendationInventory = (props) => {
                         Actions{' '}
                     </Table.HeaderCell>
                 </Table.Head>
-                <Table.Body>
-                    {filteredInventoryItems.map(
-                        ({ item, recommendedCount, selectedCount }) => (
-                            <Table.Row key={item}>
-                                <Table.TextCell>{item}</Table.TextCell>
-                                <Table.TextCell isNumber>
-                                    {recommendedCount}
-                                </Table.TextCell>
-                                <Table.TextCell isNumber>
-                                    {selectedCount}
-                                </Table.TextCell>
-                                <Table.Cell justifyContent="flex-end">
-                                    <IconButton
-                                        icon={TrashIcon}
-                                        appearance="minimal"
-                                        intent="danger"
-                                        onClick={() => setItemToBeDeleted(item)}
-                                    />
-                                </Table.Cell>
-                            </Table.Row>
-                        ),
-                    )}
-                </Table.Body>
+                <Table.Body>{renderTableBody()}</Table.Body>
             </Table>
             <Dialog
                 isShown={!!itemToBeDeleted}
