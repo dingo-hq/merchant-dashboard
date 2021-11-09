@@ -10,6 +10,7 @@ import {
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
+import SearchSelect from '../../../components/SearchSelect';
 import styles from './styles.module.css';
 
 const inventoryItems = [
@@ -44,6 +45,7 @@ const RecommendationInventory = (props) => {
     const [itemToBeDeleted, setItemToBeDeleted] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [showAddItemModal, setShowAddItemModal] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const handleRemoveItem = (item) => {
         // Happy path
@@ -140,8 +142,16 @@ const RecommendationInventory = (props) => {
                 onConfirm={handleAddItem}
                 confirmLabel="Submit"
             >
-                Add an item from your existing inventory below to the
-                recommendation inventory.
+                Add an item from your existing inventory below.
+                <SearchSelect
+                    className={styles.searchSelect}
+                    values={inventoryItems}
+                    searchKey="item"
+                    onSelect={(item) => {
+                        console.log('Got this item', item);
+                        setSelectedItem(item);
+                    }}
+                />
             </Dialog>
         </DashboardPage>
     );

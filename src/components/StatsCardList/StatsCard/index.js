@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 
+const missingNumber = '--';
+
 const StatsCard = ({ number, label, icon }) => {
     return (
         <li className={styles.card}>
