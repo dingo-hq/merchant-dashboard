@@ -25,7 +25,7 @@ const navItems = [
 
 const Home = () => {
     const handleConnectClick = () => {
-        window.location.href = '/dashboard';
+        window.location.href = SQUARE_OAUTH_LINK;
     };
 
     return (
