@@ -1,5 +1,5 @@
 import authRequest from '../utils/authRequest';
 
-export default function getMerchantDetails() {
+export default async function getMerchantDetails() {
     return authRequest('GET', '/merchants');
 }

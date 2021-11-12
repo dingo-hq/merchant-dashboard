@@ -1,25 +1,47 @@
 import { TextInputField } from 'evergreen-ui';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import getMerchantDetails from '../../../api/getMerchantDetails';
 import DashboardPage from '../../../components/DashboardPage';
 import Toggle from '../../../components/Toggle';
 import styles from './styles.module.css';
 
-const PAUSE_DINGO = 'pauseDingo';
+const PAUSED = 'paused';
+const PROMOTIONAL_DISCOUNT_ENABLED = 'promotionalDiscountEnabled';
+const PROMOTIONAL_DISCOUNT_NUMBER = 'promotionalDiscountNumber';
 
 const toggles = [
     {
-        name: PAUSE_DINGO,
+        name: PROMOTIONAL_DISCOUNT_ENABLED,
+        label: 'Enable promotional discounts',
+        note: 'Control whether or not you want customers to receive promotional codes after submitting a recommended item.',
+    },
+    {
+        name: PAUSED,
         label: 'Pause Dingo',
         note: 'Turning this setting ON means customers will stop receiving recommendation links following a purchase until this setting is turned OFF.',
     },
 ];
 
 const initialSettings = {
-    [PAUSE_DINGO]: false,
+    [PAUSED]: false,
+    [PROMOTIONAL_DISCOUNT_ENABLED]: false,
+    [PROMOTIONAL_DISCOUNT_NUMBER]: 0,
 };
 
 const Settings = (props) => {
     const [settings, setSettings] = useState(initialSettings);
+
+    useEffect(() => {
+        const fetchMerchantDetails = async () => {
+            try {
+                const { data } = await getMerchantDetails();
+                const { config } = data;
+                setSettings(config);
+            } catch (error) {}
+        };
+
+        fetchMerchantDetails();
+    }, []);
 
     const handleSettingChange = (checked, setting) => {
         setSettings((prevSettings) => ({
@@ -42,9 +64,10 @@ const Settings = (props) => {
                         type="number"
                         min={0}
                         max={100}
+                        value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
                     />
                 </li>
-                {toggles.map(({ name, label, note, intent }) => (
+                {toggles.map(({ name, label, note }) => (
                     <Toggle
                         key={name}
                         checked={settings[name]}
