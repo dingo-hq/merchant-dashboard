@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -8,6 +9,8 @@ import business from '../../assets/business.svg';
 import shoppingBags from '../../assets/shopping-bags.svg';
 import priceTag from '../../assets/price-tag.svg';
 import cart from '../../assets/cart.svg';
+import getMerchantDetails from '../../api/getMerchantDetails';
+import isUnauthorized from '../../utils/isUnauthorized';
 import styles from './styles.module.css';
 
 const navItems = [
@@ -24,8 +27,17 @@ const navItems = [
 ];
 
 const Home = () => {
-    const handleConnectClick = () => {
-        window.location.href = SQUARE_OAUTH_LINK;
+    const navigate = useNavigate();
+
+    const handleConnectClick = async () => {
+        try {
+            await getMerchantDetails();
+            navigate('/dashboard');
+        } catch (error) {
+            if (isUnauthorized) {
+                window.location.href = SQUARE_OAUTH_LINK;
+            }
+        }
     };
 
     return (
