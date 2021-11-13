@@ -10,6 +10,7 @@ import {
     EmptyState,
     SearchIcon,
     InboxIcon,
+    Spinner,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
@@ -52,8 +53,9 @@ const RecommendationCatalog = (props) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState([]);
+    const [isRemoving, setIsRemoving] = useState(false);
 
-    useEffect(async () => {
+    const fetchCatalogItems = async () => {
         setIsLoading(true);
 
         try {
@@ -63,14 +65,28 @@ const RecommendationCatalog = (props) => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    useEffect(() => {
+        fetchCatalogItems();
     }, []);
 
-    const handleRemoveItem = (item) => {
-        // Happy path
-        setItemToBeDeleted(null);
-        toaster.success(
-            `${item} was successfully removed from your recommendation catalog.`,
-        );
+    const handleRemoveItem = async (item) => {
+        setIsRemoving(true);
+
+        try {
+            // Call endpoint to remove item here
+            setItemToBeDeleted(null);
+            toaster.success(
+                `${item} was successfully removed from your recommendation catalog.`,
+            );
+        } catch (error) {
+            toaster.danger(
+                `Sorry, something went wrong when trying to remove ${item}!`,
+            );
+        } finally {
+            setIsRemoving(false);
+        }
     };
 
     const handleAddItem = () => {};
@@ -84,15 +100,23 @@ const RecommendationCatalog = (props) => {
     );
 
     const renderTableBody = () => {
+        if (isLoading) {
+            return (
+                <section className={styles.loadingContainer}>
+                    <Spinner size={64} />
+                </section>
+            );
+        }
+
         if (items.length === 0) {
             return (
                 <EmptyState
                     background="light"
-                    title="No items in the recommendation catalog"
+                    title="Your recommendation catalog is empty"
                     orientation="horizontal"
                     icon={<InboxIcon color="#C1C4D6" />}
                     iconBgColor="#EDEFF5"
-                    description="Looks like your recommendation catalog is empty. Add items to see them here!"
+                    description="Add items from your existing catalog to see them here!"
                 />
             );
         }
