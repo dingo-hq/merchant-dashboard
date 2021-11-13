@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     Table,
     IconButton,
@@ -9,10 +9,12 @@ import {
     Button,
     EmptyState,
     SearchIcon,
+    InboxIcon,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
 import SearchSelect from '../../../components/SearchSelect';
+import getCatalogItems from '../../../api/getCatalogItems';
 import styles from './styles.module.css';
 
 const items = [
@@ -48,6 +50,20 @@ const RecommendationCatalog = (props) => {
     const [searchValue, setSearchValue] = useState('');
     const [showAddItemModal, setShowAddItemModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [items, setItems] = useState([]);
+    const [isLoading, setIsLoading] = useState([]);
+
+    useEffect(async () => {
+        setIsLoading(true);
+
+        try {
+            const catalogItems = await getCatalogItems();
+            setItems(catalogItems);
+        } catch (error) {
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
 
     const handleRemoveItem = (item) => {
         // Happy path
@@ -68,6 +84,19 @@ const RecommendationCatalog = (props) => {
     );
 
     const renderTableBody = () => {
+        if (items.length === 0) {
+            return (
+                <EmptyState
+                    background="light"
+                    title="No items in the recommendation catalog"
+                    orientation="horizontal"
+                    icon={<InboxIcon color="#C1C4D6" />}
+                    iconBgColor="#EDEFF5"
+                    description="Looks like your recommendation catalog is empty. Add items to see them here!"
+                />
+            );
+        }
+
         if (filteredItems.length === 0) {
             return (
                 <EmptyState
