@@ -5193,10 +5193,10 @@ eventsource@^1.0.7:
   dependencies:
     original "^1.0.0"
 
-evergreen-ui@^6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/evergreen-ui/-/evergreen-ui-6.5.2.tgz#dc6d8e4254e18a96a4e19e7e92be16345c6567cf"
-  integrity sha512-LWjnIt3GxBiY9kdvPqEF5bHcZ9d9lMa4i9zY+5ykvs3fTLrIXAI385/tZFCz+tNGczqJLcxLQx3tM9NNAoUOoA==
+evergreen-ui@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/evergreen-ui/-/evergreen-ui-6.6.0.tgz#dbc6f67de9dead2967f6d66f788681a97d5358db"
+  integrity sha512-aEKOlHtTXBm7/4Qk5jhZ2fysuBiPTcAVmnsXtY1wiHK6a4fByX3vDsPd/9h8zlMV7oyUS+A6Gawa1iV3kBAhVw==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@segment/react-tiny-virtual-list" "^2.2.1"
