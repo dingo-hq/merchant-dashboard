@@ -11,14 +11,16 @@ const DashboardPage = ({
 }) => {
     return (
         <main className={styles.page}>
-            <header className={styles.header}>
-                <section className={styles.headings}>
-                    <h1 className={styles.heading}>{heading}</h1>
-                    <h2 className={styles.subheading}>{subheading}</h2>
-                </section>
-                {sideElement}
-            </header>
-            <section className={className}>{children}</section>
+            <div className={styles.contentContainer}>
+                <header className={styles.header}>
+                    <section className={styles.headings}>
+                        <h1 className={styles.heading}>{heading}</h1>
+                        <h2 className={styles.subheading}>{subheading}</h2>
+                    </section>
+                    {sideElement}
+                </header>
+                <section className={className}>{children}</section>
+            </div>
         </main>
     );
 };

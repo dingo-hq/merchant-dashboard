@@ -14,58 +14,60 @@ const Navigation = ({ navItems, dashboardItems, showLogOut }) => {
 
     return (
         <nav className={styles.nav}>
-            <ul className={styles.navItems}>
-                <img
-                    className={styles.logo}
-                    src={logo}
-                    onClick={() => {
-                        window.location.href = '/';
-                    }}
-                />
-                {navItems.map(({ icon, label }) => (
-                    <Button
-                        key={label}
-                        size="large"
-                        appearance="minimal"
-                        className={styles.item}
-                        iconBefore={icon}
-                    >
-                        {label}
-                    </Button>
-                ))}
-            </ul>
-            <ul className={styles.dashboardItems}>
-                {dashboardItems.map(({ icon, path, label }) => (
-                    <Button
-                        size="large"
-                        appearance="minimal"
-                        className={classNames(
-                            styles.item,
-                            pathname === path && styles.active,
-                        )}
-                        key={path}
-                        iconBefore={icon}
+            <div className={styles.contentContainer}>
+                <ul className={styles.navItems}>
+                    <img
+                        className={styles.logo}
+                        src={logo}
                         onClick={() => {
-                            history.push(path);
+                            window.location.href = '/';
+                        }}
+                    />
+                    {navItems.map(({ icon, label }) => (
+                        <Button
+                            key={label}
+                            size="large"
+                            appearance="minimal"
+                            className={styles.item}
+                            iconBefore={icon}
+                        >
+                            {label}
+                        </Button>
+                    ))}
+                </ul>
+                <ul className={styles.dashboardItems}>
+                    {dashboardItems.map(({ icon, path, label }) => (
+                        <Button
+                            size="large"
+                            appearance="minimal"
+                            className={classNames(
+                                styles.item,
+                                pathname === path && styles.active,
+                            )}
+                            key={path}
+                            iconBefore={icon}
+                            onClick={() => {
+                                history.push(path);
+                            }}
+                        >
+                            {label}
+                        </Button>
+                    ))}
+                </ul>
+                {showLogOut && (
+                    <Button
+                        iconBefore={LogOutIcon}
+                        appearance="default"
+                        size="large"
+                        className={styles.item}
+                        onClick={() => {
+                            window.location.href = APP_LOGOUT_URL;
                         }}
                     >
-                        {label}
+                        Log out
                     </Button>
-                ))}
-            </ul>
-            {showLogOut && (
-                <Button
-                    iconBefore={LogOutIcon}
-                    appearance="default"
-                    size="large"
-                    className={styles.item}
-                    onClick={() => {
-                        window.location.href = APP_LOGOUT_URL;
-                    }}
-                >
-                    Log out
-                </Button>
-            )}
+                )}
+            </div>
         </nav>
     );
 };
