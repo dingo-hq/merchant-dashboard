@@ -15,7 +15,7 @@ import DashboardPage from '../../../components/DashboardPage';
 import SearchSelect from '../../../components/SearchSelect';
 import styles from './styles.module.css';
 
-const inventoryItems = [
+const items = [
     {
         item: 'Matcha Milk Tea',
         recommendedCount: 100,
@@ -38,12 +38,12 @@ const inventoryItems = [
     },
 ];
 
-const fuse = new Fuse(inventoryItems, {
+const fuse = new Fuse(items, {
     threshold: 0.25,
     keys: ['item'],
 });
 
-const RecommendationInventory = (props) => {
+const RecommendationCatalog = (props) => {
     const [itemToBeDeleted, setItemToBeDeleted] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [showAddItemModal, setShowAddItemModal] = useState(false);
@@ -53,22 +53,22 @@ const RecommendationInventory = (props) => {
         // Happy path
         setItemToBeDeleted(null);
         toaster.success(
-            `${item} was successfully removed from your recommendation inventory.`,
+            `${item} was successfully removed from your recommendation catalog.`,
         );
     };
 
     const handleAddItem = () => {};
 
-    const filteredInventoryItems = useMemo(
+    const filteredItems = useMemo(
         () =>
             searchValue
                 ? fuse.search(searchValue).map(({ item }) => item)
-                : inventoryItems,
+                : items,
         [searchValue],
     );
 
     const renderTableBody = () => {
-        if (filteredInventoryItems.length === 0) {
+        if (filteredItems.length === 0) {
             return (
                 <EmptyState
                     background="light"
@@ -81,7 +81,7 @@ const RecommendationInventory = (props) => {
             );
         }
 
-        return filteredInventoryItems.map(
+        return filteredItems.map(
             ({ item, recommendedCount, selectedCount }) => (
                 <Table.Row key={item}>
                     <Table.TextCell>{item}</Table.TextCell>
@@ -102,7 +102,7 @@ const RecommendationInventory = (props) => {
 
     return (
         <DashboardPage
-            heading="Recommendation Inventory"
+            heading="Recommendation Catalog"
             subheading="Items listed here may appear as a recommended item for customers who receive a recommendation link"
             sideElement={
                 <Button
@@ -119,7 +119,7 @@ const RecommendationInventory = (props) => {
                 <Table.Head>
                     <Table.SearchHeaderCell
                         onChange={(value) => setSearchValue(value)}
-                        placeholder="Search inventory items"
+                        placeholder="Search catalog items"
                     />
                     <Table.HeaderCell>
                         Number of Times Recommended
@@ -143,9 +143,9 @@ const RecommendationInventory = (props) => {
             >
                 Are you sure you want to remove{' '}
                 <strong>{itemToBeDeleted}</strong> from your recommendation
-                inventory?
+                catalog?
                 <span className={styles.note}>
-                    Note: it will still be kept in your original inventory.
+                    Note: it will still be kept in your original catalog.
                 </span>
             </Dialog>
             <Dialog
@@ -155,10 +155,10 @@ const RecommendationInventory = (props) => {
                 onConfirm={handleAddItem}
                 confirmLabel="Submit"
             >
-                Add an item from your existing inventory below.
+                Add an item from your existing catalog below.
                 <SearchSelect
                     className={styles.searchSelect}
-                    values={inventoryItems}
+                    values={items}
                     searchKey="item"
                     onSelect={(item) => {
                         console.log('Got this item', item);
@@ -170,6 +170,6 @@ const RecommendationInventory = (props) => {
     );
 };
 
-RecommendationInventory.propTypes = {};
+RecommendationCatalog.propTypes = {};
 
-export default RecommendationInventory;
+export default RecommendationCatalog;

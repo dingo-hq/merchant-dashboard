@@ -6,7 +6,7 @@ import ProtectedRoute from '../../components/ProtectedRoute';
 import styles from './styles.module.css';
 import Statistics from './Statistics';
 import Settings from './Settings';
-import RecommendationInventory from './RecommendationInventory';
+import RecommendationCatalog from './RecommendationCatalog';
 
 const BASE_PATH = '/dashboard';
 
@@ -18,8 +18,8 @@ const navItems = [
     },
     {
         icon: ThListIcon,
-        path: '/dashboard/recommendation-inventory',
-        label: 'Recommendation Inventory',
+        path: '/dashboard/catalog',
+        label: 'Recommendation Catalog',
     },
     {
         icon: CogIcon,
@@ -47,8 +47,8 @@ const Dashboard = () => {
             />
             <ProtectedRoute
                 exact
-                path={`${BASE_PATH}/recommendation-inventory`}
-                component={RecommendationInventory}
+                path={`${BASE_PATH}/catalog`}
+                component={RecommendationCatalog}
             />
         </section>
     );

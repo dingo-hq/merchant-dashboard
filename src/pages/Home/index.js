@@ -48,8 +48,10 @@ const Home = () => {
             <section className={styles.landing}>
                 <div className={styles.content}>
                     <h1 className={styles.message}>
-                        Accelerate your business and increase customer
-                        retention.
+                        <span className={styles.highlight}>Accelerate</span>{' '}
+                        your business and{' '}
+                        <span className={styles.highlight}>increase</span>{' '}
+                        customer retention.
                     </h1>
                     <p className={styles.description}>
                         Looking to grow your customer base or find ways to keep
