@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -27,12 +27,12 @@ const navItems = [
 ];
 
 const Home = () => {
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const handleConnectClick = async () => {
         try {
             await getMerchantDetails();
-            navigate('/dashboard');
+            history.push('/dashboard');
         } catch (error) {
             if (isUnauthorized) {
                 window.location.href = SQUARE_OAUTH_URL;

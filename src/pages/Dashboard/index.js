@@ -1,11 +1,14 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { TimelineLineChartIcon, ThListIcon, CogIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import styles from './styles.module.css';
 import Statistics from './Statistics';
 import Settings from './Settings';
 import RecommendationInventory from './RecommendationInventory';
+
+const BASE_PATH = '/dashboard';
 
 const navItems = [
     {
@@ -29,15 +32,24 @@ const Dashboard = () => {
     return (
         <section className={styles.container}>
             <Navigation navItems={navItems} />
-            <Routes>
-                <Route path="/" element={<Navigate to="stats" />} />
-                <Route path="stats" element={<Statistics />} />
-                <Route path="settings" element={<Settings />} />
-                <Route
-                    path="recommendation-inventory"
-                    element={<RecommendationInventory />}
-                />
-            </Routes>
+            <Route exact path={BASE_PATH}>
+                <Redirect to={`${BASE_PATH}/stats`} />
+            </Route>
+            <ProtectedRoute
+                exact
+                path={`${BASE_PATH}/stats`}
+                component={Statistics}
+            />
+            <ProtectedRoute
+                exact
+                path={`${BASE_PATH}/settings`}
+                component={Settings}
+            />
+            <ProtectedRoute
+                exact
+                path={`${BASE_PATH}/recommendation-inventory`}
+                component={RecommendationInventory}
+            />
         </section>
     );
 };

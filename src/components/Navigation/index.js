@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { LogOutIcon, Button } from 'evergreen-ui';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import { APP_LOGOUT_URL } from '../../constants';
 import styles from './styles.module.css';
 
 const Navigation = ({ navItems, showLogOut }) => {
-    const navigate = useNavigate();
+    const history = useHistory();
     const location = useLocation();
     const { pathname } = location;
 
@@ -33,7 +33,7 @@ const Navigation = ({ navItems, showLogOut }) => {
                         key={path}
                         iconBefore={icon}
                         onClick={() => {
-                            navigate(path);
+                            history.push(path);
                         }}
                     >
                         {label}
