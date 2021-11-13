@@ -14,13 +14,14 @@
 
 .logo {
     height: 32px;
+    margin: 0 32px 0 0;
 }
 
 .logo:hover {
     cursor: pointer;
 }
 
-.navItems {
+.navItems, .dashboardItems {
     list-style: none;
     padding: 0;
     display: flex;

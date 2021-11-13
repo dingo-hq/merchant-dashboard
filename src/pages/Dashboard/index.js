@@ -10,7 +10,7 @@ import RecommendationCatalog from './RecommendationCatalog';
 
 const BASE_PATH = '/dashboard';
 
-const navItems = [
+const dashboardItems = [
     {
         icon: TimelineLineChartIcon,
         path: '/dashboard/stats',
@@ -31,7 +31,7 @@ const navItems = [
 const Dashboard = () => {
     return (
         <section className={styles.container}>
-            <Navigation navItems={navItems} />
+            <Navigation dashboardItems={dashboardItems} />
             <Route exact path={BASE_PATH}>
                 <Redirect to={`${BASE_PATH}/stats`} />
             </Route>

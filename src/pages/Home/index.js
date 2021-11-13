@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { PropertiesIcon, ShopIcon } from 'evergreen-ui';
+import { GridViewIcon, PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
 import SquareLogo from '../../components/SquareLogo';
@@ -17,33 +17,60 @@ const navItems = [
     {
         icon: ShopIcon,
         label: 'How it Works',
-        path: '',
     },
     {
         icon: PropertiesIcon,
         label: 'Features',
-        path: '',
     },
 ];
 
 const Home = () => {
     const history = useHistory();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const handleConnectClick = async () => {
+    useEffect(async () => {
         try {
             await getMerchantDetails();
-            history.push('/dashboard');
+            setIsAuthenticated(true);
         } catch (error) {
             if (isUnauthorized) {
-                window.location.href = SQUARE_OAUTH_URL;
+                setIsAuthenticated(false);
             }
         }
+    }, []);
+
+    const defaultCta = {
+        onClick: () => {
+            window.location.href = SQUARE_OAUTH_URL;
+        },
+        text: 'Connect with Square',
+        iconBefore: SquareLogo,
     };
+    const authenticatedCta = {
+        onClick: () => {
+            history.push('/dashboard');
+        },
+        text: 'Continue to Dashboard',
+        iconBefore: GridViewIcon,
+    };
+
+    const cta = isAuthenticated ? authenticatedCta : defaultCta;
+
+    const ctaButton = (
+        <PrimaryButton
+            onClick={cta.onClick}
+            size="large"
+            className={styles.connect}
+            iconBefore={cta.iconBefore}
+        >
+            {cta.text}
+        </PrimaryButton>
+    );
 
     return (
         <section className={styles.container}>
             <header>
-                <Navigation navItems={navItems} showLogOut={false} />
+                <Navigation navItems={navItems} showLogOut={isAuthenticated} />
             </header>
             <section className={styles.landing}>
                 <div className={styles.content}>
@@ -58,14 +85,7 @@ const Home = () => {
                         them coming back? Take control of your business by
                         integrating your Square account with Dingo!
                     </p>
-                    <PrimaryButton
-                        onClick={handleConnectClick}
-                        size="large"
-                        className={styles.connect}
-                        iconBefore={SquareLogo}
-                    >
-                        Connect with Square
-                    </PrimaryButton>
+                    {ctaButton}
                 </div>
                 <div className={styles.illustrationContainer}>
                     <img className={styles.illustration} src={business} />

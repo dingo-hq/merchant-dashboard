@@ -7,22 +7,35 @@ import logo from '../../assets/logo.png';
 import { APP_LOGOUT_URL } from '../../constants';
 import styles from './styles.module.css';
 
-const Navigation = ({ navItems, showLogOut }) => {
+const Navigation = ({ navItems, dashboardItems, showLogOut }) => {
     const history = useHistory();
     const location = useLocation();
     const { pathname } = location;
 
     return (
         <nav className={styles.nav}>
-            <img
-                className={styles.logo}
-                src={logo}
-                onClick={() => {
-                    window.location.href = '/';
-                }}
-            />
             <ul className={styles.navItems}>
-                {navItems.map(({ icon, path, label }) => (
+                <img
+                    className={styles.logo}
+                    src={logo}
+                    onClick={() => {
+                        window.location.href = '/';
+                    }}
+                />
+                {navItems.map(({ icon, label }) => (
+                    <Button
+                        key={label}
+                        size="large"
+                        appearance="minimal"
+                        className={styles.item}
+                        iconBefore={icon}
+                    >
+                        {label}
+                    </Button>
+                ))}
+            </ul>
+            <ul className={styles.dashboardItems}>
+                {dashboardItems.map(({ icon, path, label }) => (
                     <Button
                         size="large"
                         appearance="minimal"
@@ -43,7 +56,7 @@ const Navigation = ({ navItems, showLogOut }) => {
             {showLogOut && (
                 <Button
                     iconBefore={LogOutIcon}
-                    appearance="minimal"
+                    appearance="default"
                     size="large"
                     className={styles.item}
                     onClick={() => {
@@ -62,6 +75,12 @@ Navigation.propTypes = {
         PropTypes.shape({
             icon: PropTypes.element.isRequired,
             label: PropTypes.string.isRequired,
+        }),
+    ),
+    dashboardItems: PropTypes.arrayOf(
+        PropTypes.shape({
+            icon: PropTypes.element.isRequired,
+            label: PropTypes.string.isRequired,
             path: PropTypes.string.isRequired,
         }),
     ),
@@ -70,6 +89,7 @@ Navigation.propTypes = {
 
 Navigation.defaultProps = {
     navItems: [],
+    dashboardItems: [],
     showLogOut: true,
 };
 
