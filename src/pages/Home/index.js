@@ -4,7 +4,7 @@ import { PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
 import SquareLogo from '../../components/SquareLogo';
-import { SQUARE_OAUTH_LINK } from '../../constants';
+import { SQUARE_OAUTH_URL } from '../../constants';
 import business from '../../assets/business.svg';
 import shoppingBags from '../../assets/shopping-bags.svg';
 import priceTag from '../../assets/price-tag.svg';
@@ -35,7 +35,7 @@ const Home = () => {
             navigate('/dashboard');
         } catch (error) {
             if (isUnauthorized) {
-                window.location.href = SQUARE_OAUTH_LINK;
+                window.location.href = SQUARE_OAUTH_URL;
             }
         }
     };

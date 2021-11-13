@@ -4,6 +4,7 @@ import { LogOutIcon, Button } from 'evergreen-ui';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import logo from '../../assets/logo.png';
+import { APP_LOGOUT_URL } from '../../constants';
 import styles from './styles.module.css';
 
 const Navigation = ({ navItems, showLogOut }) => {
@@ -45,6 +46,9 @@ const Navigation = ({ navItems, showLogOut }) => {
                     appearance="minimal"
                     size="large"
                     className={styles.item}
+                    onClick={() => {
+                        window.location.href = APP_LOGOUT_URL;
+                    }}
                 >
                     Log out
                 </Button>
