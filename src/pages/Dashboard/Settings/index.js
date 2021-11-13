@@ -1,6 +1,7 @@
-import { TextInputField } from 'evergreen-ui';
+import { Button, TextInputField, toaster } from 'evergreen-ui';
 import React, { useState, useEffect } from 'react';
 import getMerchantDetails from '../../../api/getMerchantDetails';
+import saveSettings from '../../../api/saveSettings';
 import DashboardPage from '../../../components/DashboardPage';
 import Toggle from '../../../components/Toggle';
 import styles from './styles.module.css';
@@ -30,14 +31,20 @@ const initialSettings = {
 
 const Settings = (props) => {
     const [settings, setSettings] = useState(initialSettings);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchMerchantDetails = async () => {
+            setIsLoading(true);
+
             try {
                 const { data } = await getMerchantDetails();
                 const { config } = data;
                 setSettings(config);
-            } catch (error) {}
+            } catch (error) {
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchMerchantDetails();
@@ -50,35 +57,62 @@ const Settings = (props) => {
         }));
     };
 
+    const handleSave = async () => {
+        setIsLoading(true);
+
+        try {
+            await saveSettings(settings);
+            toaster.success('Your changes were successfully saved.');
+        } catch (error) {
+            toaster.danger(
+                "Something went wrong, we couldn't save your settings!",
+            );
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <DashboardPage
             heading="Settings"
             subheading="Make changes to how Dingo works with your current business and customers"
             className={styles.page}
         >
-            <ul className={styles.container}>
-                <li>
-                    <TextInputField
-                        label="Promotional discount (%)"
-                        description="The promotion code value that appears after a user selects and submits a recommended item from a recommendation link"
-                        type="number"
-                        min={0}
-                        max={100}
-                        value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
-                    />
-                </li>
-                {toggles.map(({ name, label, note }) => (
-                    <Toggle
-                        key={name}
-                        checked={settings[name]}
-                        name={name}
-                        label={label}
-                        note={note}
-                        onChange={handleSettingChange}
-                        className={styles.toggle}
-                    />
-                ))}
-            </ul>
+            <section>
+                <ul className={styles.settings}>
+                    <li>
+                        <TextInputField
+                            label="Promotional discount (%)"
+                            description="The promotion code value that appears after a user selects and submits a recommended item from a recommendation link"
+                            type="number"
+                            min={0}
+                            max={100}
+                            value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
+                            disabled={isLoading}
+                        />
+                    </li>
+                    {toggles.map(({ name, label, note }) => (
+                        <Toggle
+                            key={name}
+                            checked={settings[name]}
+                            name={name}
+                            label={label}
+                            note={note}
+                            onChange={handleSettingChange}
+                            className={styles.toggle}
+                            disabled={isLoading}
+                        />
+                    ))}
+                </ul>
+                <Button
+                    appearance="primary"
+                    onClick={handleSave}
+                    isLoading={isLoading}
+                    size="large"
+                >
+                    Save
+                </Button>
+            </section>
             <div className={styles.right} />
         </DashboardPage>
     );
