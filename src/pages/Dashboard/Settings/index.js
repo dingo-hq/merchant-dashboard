@@ -50,10 +50,10 @@ const Settings = (props) => {
         fetchMerchantDetails();
     }, []);
 
-    const handleSettingChange = (checked, setting) => {
+    const handleSettingChange = (value, setting) => {
         setSettings((prevSettings) => ({
             ...prevSettings,
-            [setting]: checked,
+            [setting]: value,
         }));
     };
 
@@ -89,6 +89,12 @@ const Settings = (props) => {
                             max={100}
                             value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
                             disabled={isLoading}
+                            onChange={(e) =>
+                                handleSettingChange(
+                                    parseInt(e.target.value),
+                                    PROMOTIONAL_DISCOUNT_NUMBER,
+                                )
+                            }
                         />
                     </li>
                     {toggles.map(({ name, label, note }) => (
