@@ -10,9 +10,7 @@ const ProtectedRoute = ({ exact, path, component }) => {
     useEffect(() => {
         const checkAuthentication = async () => {
             try {
-                console.log('checking merchant details');
                 await getMerchantDetails();
-                console.log("i'm authenticated");
             } catch (error) {
                 if (isUnauthorized(error)) {
                     history.push('/');
