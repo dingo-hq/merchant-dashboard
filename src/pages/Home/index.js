@@ -48,12 +48,13 @@ const Home = () => {
             <section className={styles.landing}>
                 <div className={styles.content}>
                     <h1 className={styles.message}>
-                        Accelerate your business and attract more customers.
+                        Accelerate your business and increase customer
+                        retention.
                     </h1>
                     <p className={styles.description}>
-                        Looking to grow your customer base or increase the
-                        number of recurring customers? Take control of your
-                        business by integrating your Square account with Dingo!
+                        Looking to grow your customer base or find ways to keep
+                        them coming back? Take control of your business by
+                        integrating your Square account with Dingo!
                     </p>
                     <PrimaryButton
                         onClick={handleConnectClick}
