@@ -14,11 +14,11 @@
 }
 
 .errorCode {
-    font-size: 240px;
+    font-size: 272px;
     font-weight: bold;
     position: absolute;
     z-index: -1;
-    top: -120px;
+    top: -156px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -27,7 +27,7 @@
     position: relative;
     width: 768px;
     display: flex;
-    margin-top: 120px;
+    margin-top: 156px;
 }
 
 .photo {
