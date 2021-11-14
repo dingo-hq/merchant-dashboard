@@ -119,7 +119,6 @@ const Settings = (props) => {
                     Save
                 </Button>
             </section>
-            <div className={styles.right} />
         </DashboardPage>
     );
 };
