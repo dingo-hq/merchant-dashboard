@@ -7,13 +7,13 @@ import logo from '../../assets/logo.png';
 import { APP_LOGOUT_URL } from '../../constants';
 import styles from './styles.module.css';
 
-const Navigation = ({ navItems, dashboardItems, showLogOut }) => {
+const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {
     const history = useHistory();
     const location = useLocation();
     const { pathname } = location;
 
     return (
-        <nav className={styles.nav}>
+        <nav className={classNames(styles.nav, edgeShadow && styles.shadow)}>
             <ul className={styles.navItems}>
                 <img
                     className={styles.logo}
@@ -85,12 +85,14 @@ Navigation.propTypes = {
         }),
     ),
     showLogOut: PropTypes.bool,
+    edgeShadow: PropTypes.bool,
 };
 
 Navigation.defaultProps = {
     navItems: [],
     dashboardItems: [],
     showLogOut: true,
+    edgeShadow: true,
 };
 
 export default Navigation;
