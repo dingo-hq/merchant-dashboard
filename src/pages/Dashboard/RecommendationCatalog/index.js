@@ -91,12 +91,20 @@ const RecommendationCatalog = (props) => {
 
     const handleAddItem = () => {};
 
+    console.log('items are', items);
+    console.log('searchValue is', searchValue);
+
+    console.log(
+        'fuse Search',
+        fuse.search(searchValue).map(({ item }) => item),
+    );
+
     const filteredItems = useMemo(
         () =>
             searchValue
                 ? fuse.search(searchValue).map(({ item }) => item)
                 : items,
-        [searchValue],
+        [searchValue, items],
     );
 
     const renderTableBody = () => {
@@ -121,6 +129,8 @@ const RecommendationCatalog = (props) => {
             );
         }
 
+        console.log('filteredItems', filteredItems);
+
         if (filteredItems.length === 0) {
             return (
                 <EmptyState
@@ -135,17 +145,17 @@ const RecommendationCatalog = (props) => {
         }
 
         return filteredItems.map(
-            ({ item, recommendedCount, selectedCount }) => (
-                <Table.Row key={item}>
-                    <Table.TextCell>{item}</Table.TextCell>
-                    <Table.TextCell isNumber>{recommendedCount}</Table.TextCell>
-                    <Table.TextCell isNumber>{selectedCount}</Table.TextCell>
+            ({ id, itemData, recommendedCount, selectedCount }) => (
+                <Table.Row key={id}>
+                    <Table.TextCell>{itemData.name}</Table.TextCell>
+                    <Table.TextCell isNumber>100</Table.TextCell>
+                    <Table.TextCell isNumber>100</Table.TextCell>
                     <Table.Cell justifyContent="flex-end">
                         <IconButton
                             icon={TrashIcon}
                             appearance="minimal"
                             intent="danger"
-                            onClick={() => setItemToBeDeleted(item)}
+                            onClick={() => setItemToBeDeleted(itemData.name)}
                         />
                     </Table.Cell>
                 </Table.Row>

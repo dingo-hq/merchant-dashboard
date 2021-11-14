@@ -12,6 +12,7 @@ import priceTag from '../../assets/price-tag.svg';
 import cart from '../../assets/cart.svg';
 import getMerchantDetails from '../../api/getMerchantDetails';
 import isUnauthorized from '../../utils/isUnauthorized';
+import collagePhoto from '../../assets/collage.png';
 import styles from './styles.module.css';
 
 const navItems = [
@@ -77,17 +78,18 @@ const Home = () => {
                 <div
                     className={classNames(
                         styles.contentContainer,
-                        styles.landingContent,
+                        styles.landingContainer,
                     )}
                 >
-                    <div className={styles.statement}>
-                        <h1 className={styles.message}>
+                    <div className={styles.landingContent}>
+                        <h1 className={styles.landingMessage}>
                             <span className={styles.highlight}>Accelerate</span>{' '}
-                            your business and{' '}
-                            <span className={styles.highlight}>increase</span>{' '}
-                            customer retention.
+                            your business through the power of{' '}
+                            <span className={styles.highlight}>
+                                recommendations
+                            </span>
                         </h1>
-                        <p className={styles.description}>
+                        <p className={styles.landingDescription}>
                             Looking to grow your customer base or find ways to
                             keep them coming back? Take control of your business
                             by integrating your Square account with Dingo!
@@ -99,11 +101,37 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className={styles.howItWorks}>
+            <section className={styles.mission}>
                 <div
                     className={classNames(
                         styles.contentContainer,
-                        styles.howItWorksContent,
+                        styles.missionContainer,
+                    )}
+                >
+                    <img src={collagePhoto} />
+                    <div className={styles.missionContent}>
+                        <h2 className={styles.sectionTitle}>Our Mission</h2>
+                        <p className={styles.missionDescription}>
+                            Dingo aims to find ways to help businesses continue
+                            bringing customers back. Whether it&apos;s buying a
+                            cup of coffee at a local coffee shop or a small
+                            succulent plant at a plaza across the street, we
+                            understand it can be challenging to retain
+                            customers, and we want to turn that around. We
+                            provide a set of easy-to-use tools that allow
+                            businesses to recommend items straight to their
+                            customers after they make a successful purchase so
+                            that at the end of the day, you&apos;ll leave them
+                            with something that will keep them coming back!
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section className={styles.how}>
+                <div
+                    className={classNames(
+                        styles.contentContainer,
+                        styles.howContainer,
                     )}
                 >
                     <h2 className={styles.sectionTitle}>How it Works</h2>

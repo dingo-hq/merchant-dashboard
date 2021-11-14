@@ -14,25 +14,26 @@
     font-weight: 500 !important;
 }
 
-.message {
-    margin: 0;
-    font-weight: 500;
-    font-size: 64px;
-}
-
-.landingContent {
+.landingContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 32px;
-    padding: 144px 64px;
+    padding-top: 144px;
+    padding-bottom: 144px;
 }
 
-.statement {
+.landingContent {
     flex: 4;
     display: flex;
     flex-direction: column;
     gap: 32px;
+}
+
+.landingMessage {
+    margin: 0;
+    font-weight: 500;
+    font-size: 64px;
 }
 
 .illustrationContainer {
@@ -43,16 +44,39 @@
     width: 100%;
 }
 
-.description {
+.landingDescription {
     margin: 0;
 }
 
-.howItWorks {
-    background-color: #FDE5E3;
-    box-sizing: border-box;
+.mission {
+    background-color: black;
 }
 
-.howItWorksContent {
+.missionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+    color: white;
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+.missionDescription {
+    margin: 32px 0 0 0;
+}
+
+.how {
+    background-color: white;
+}
+
+.backgroundTitle {
+    color: white;
+    font-weight: 500;
+    font-size: 32px;
+}
+
+.howContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
