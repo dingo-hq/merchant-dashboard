@@ -32,6 +32,7 @@ const initialSettings = {
 const Settings = (props) => {
     const [settings, setSettings] = useState(initialSettings);
     const [isLoading, setIsLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         const fetchMerchantDetails = async () => {
@@ -58,7 +59,7 @@ const Settings = (props) => {
     };
 
     const handleSave = async () => {
-        setIsLoading(true);
+        setIsSaving(true);
 
         try {
             await saveSettings(settings);
@@ -68,7 +69,7 @@ const Settings = (props) => {
                 "Something went wrong, we couldn't save your settings!",
             );
         } finally {
-            setIsLoading(false);
+            setIsSaving(false);
         }
     };
 
@@ -88,7 +89,7 @@ const Settings = (props) => {
                             min={0}
                             max={100}
                             value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
-                            disabled={isLoading}
+                            disabled={isLoading || isSaving}
                             onChange={(e) =>
                                 handleSettingChange(
                                     parseInt(e.target.value),
@@ -106,14 +107,15 @@ const Settings = (props) => {
                             note={note}
                             onChange={handleSettingChange}
                             className={styles.toggle}
-                            disabled={isLoading}
+                            disabled={isLoading || isSaving}
                         />
                     ))}
                 </ul>
                 <Button
                     appearance="primary"
                     onClick={handleSave}
-                    isLoading={isLoading}
+                    isLoading={isSaving}
+                    disabled={isLoading}
                     size="large"
                 >
                     Save

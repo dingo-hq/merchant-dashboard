@@ -1,0 +1,10 @@
+.spinnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+.spinnerContainer > div > svg > circle {
+    stroke: #c1c4d6 !important;
+}

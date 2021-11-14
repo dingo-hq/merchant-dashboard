@@ -5,7 +5,13 @@ import classNames from 'classnames';
 import Fuse from 'fuse.js';
 import styles from './styles.module.css';
 
-const SearchSelect = ({ className, onSelect, values, searchKey }) => {
+const SearchSelect = ({
+    className,
+    onSelect,
+    values,
+    searchKey,
+    placeholder,
+}) => {
     const [showValues, setShowValues] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
@@ -31,7 +37,7 @@ const SearchSelect = ({ className, onSelect, values, searchKey }) => {
     return (
         <div className={classNames(styles.container, className)}>
             <SearchInput
-                placeholder="Search inventory items"
+                placeholder={placeholder}
                 width="100%"
                 onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setShowValues(true)}
@@ -58,10 +64,12 @@ SearchSelect.propTypes = {
     onSelect: PropTypes.func.isRequired,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
     searchKey: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
 };
 
 SearchSelect.defaultProps = {
     className: null,
+    placeholder: '',
 };
 
 export default SearchSelect;

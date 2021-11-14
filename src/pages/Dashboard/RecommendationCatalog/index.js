@@ -213,8 +213,8 @@ const RecommendationCatalog = (props) => {
                     className={styles.searchSelect}
                     values={items}
                     searchKey="item"
+                    placeholder="Search catalog items"
                     onSelect={(item) => {
-                        console.log('Got this item', item);
                         setSelectedItem(item);
                     }}
                 />
