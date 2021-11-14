@@ -108,7 +108,12 @@ const Home = () => {
                         styles.missionContainer,
                     )}
                 >
-                    <img src={collagePhoto} />
+                    <div className={styles.missionPhotoContainer}>
+                        <img
+                            src={collagePhoto}
+                            className={styles.missionPhoto}
+                        />
+                    </div>
                     <div className={styles.missionContent}>
                         <h2 className={styles.sectionTitle}>Our Mission</h2>
                         <p className={styles.missionDescription}>
@@ -166,13 +171,14 @@ const Home = () => {
                                 src={shoppingBags}
                             />
                             <h3 className={styles.stepLabel}>
-                                Watch customers come back again... and again!
+                                Recommendations sent to customers
                             </h3>
                             <p className={styles.stepDescription}>
-                                Gain insight into how Dingo is impacting your
-                                business. Whether it&apos;s visualizing trends
-                                over time or recording your conversion rates, we
-                                have the numbers for you.
+                                After a customer makes a successful purchase,
+                                they will be sent a link where they can view
+                                their recommendations. In the Dingo dashboard,
+                                you have the option to configure this to your
+                                liking!
                             </p>
                         </figure>
                     </div>

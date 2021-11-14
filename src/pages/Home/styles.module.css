@@ -18,9 +18,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 32px;
-    padding-top: 144px;
-    padding-bottom: 144px;
+    gap: 64px;
+    padding-top: 196px;
+    padding-bottom: 196px;
 }
 
 .landingContent {
@@ -55,7 +55,7 @@
 .missionContainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 64px;
     color: white;
     padding-top: 64px;
@@ -64,6 +64,14 @@
 
 .missionDescription {
     margin: 32px 0 0 0;
+}
+
+.missionPhotoContainer, .missionContent {
+    flex: 1;
+}
+
+.missionPhoto {
+    width: 100%;
 }
 
 .how {
