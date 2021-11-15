@@ -5,19 +5,12 @@ import classNames from 'classnames';
 import Fuse from 'fuse.js';
 import styles from './styles.module.css';
 
-const SearchSelect = ({
-    className,
-    onSelect,
-    values,
-    searchKey,
-    placeholder,
-}) => {
+const SearchSelect = ({ className, onSelect, values, placeholder }) => {
     const [showValues, setShowValues] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
     const fuse = new Fuse(values, {
         threshold: 0.25,
-        keys: [searchKey],
     });
 
     const handleClick = (value) => {
@@ -36,22 +29,24 @@ const SearchSelect = ({
 
     return (
         <div className={classNames(styles.container, className)}>
-            <SearchInput
-                placeholder={placeholder}
-                width="100%"
-                onChange={(e) => setSearchValue(e.target.value)}
-                onFocus={() => setShowValues(true)}
-                value={searchValue}
-            />
+            <div className={styles.inputContainer}>
+                <SearchInput
+                    placeholder={placeholder}
+                    width="100%"
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onFocus={() => setShowValues(true)}
+                    value={searchValue}
+                />
+            </div>
             <ul className={styles.list}>
                 {showValues &&
-                    filteredValues.map((obj) => (
+                    filteredValues.map((value) => (
                         <li
-                            key={obj[searchKey]}
+                            key={value}
                             className={styles.listItem}
-                            onClick={() => handleClick(obj[searchKey])}
+                            onClick={() => handleClick(value)}
                         >
-                            {obj[searchKey]}
+                            {value}
                         </li>
                     ))}
             </ul>
@@ -63,7 +58,6 @@ SearchSelect.propTypes = {
     className: PropTypes.string,
     onSelect: PropTypes.func.isRequired,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
-    searchKey: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
 };
 

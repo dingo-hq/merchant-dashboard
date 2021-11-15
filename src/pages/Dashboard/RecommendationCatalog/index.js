@@ -11,11 +11,13 @@ import {
     SearchIcon,
     InboxIcon,
     Spinner,
+    Switch,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
 import SearchSelect from '../../../components/SearchSelect';
 import getCatalogItems from '../../../api/getCatalogItems';
+import updateCatalogItem from '../../../api/updateCatalogItem';
 import styles from './styles.module.css';
 
 const items = [
@@ -47,20 +49,26 @@ const fuse = new Fuse(items, {
 });
 
 const RecommendationCatalog = (props) => {
-    const [itemToBeDeleted, setItemToBeDeleted] = useState(null);
+    const [itemToBeDisabled, setItemToBeDisabled] = useState(null);
     const [searchValue, setSearchValue] = useState('');
-    const [showAddItemModal, setShowAddItemModal] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState([]);
-    const [isRemoving, setIsRemoving] = useState(false);
+    const [isDisabling, setIsDisabling] = useState(false);
+    const [itemEnabled, setItemEnabled] = useState({});
 
     const fetchCatalogItems = async () => {
         setIsLoading(true);
 
         try {
-            const catalogItems = await getCatalogItems();
-            setItems(catalogItems);
+            const { data } = await getCatalogItems();
+
+            setItems(data);
+            data.forEach(({ squareId, enabled }) => {
+                setItemEnabled((prevItemEnabled) => ({
+                    ...prevItemEnabled,
+                    [squareId]: enabled,
+                }));
+            });
         } catch (error) {
         } finally {
             setIsLoading(false);
@@ -71,33 +79,52 @@ const RecommendationCatalog = (props) => {
         fetchCatalogItems();
     }, []);
 
-    const handleRemoveItem = async (item) => {
-        setIsRemoving(true);
+    const handleToggleClick = async (id, name) => {
+        if (!itemEnabled[id]) {
+            setItemEnabled((prevItemEnabled) => ({
+                ...prevItemEnabled,
+                [id]: true,
+            }));
 
-        try {
-            // Call endpoint to remove item here
-            setItemToBeDeleted(null);
-            toaster.success(
-                `${item} was successfully removed from your recommendation catalog.`,
-            );
-        } catch (error) {
-            toaster.danger(
-                `Sorry, something went wrong when trying to remove ${item}!`,
-            );
-        } finally {
-            setIsRemoving(false);
+            try {
+                await updateCatalogItem(id, { enabled: true });
+            } catch (error) {
+                toaster.danger(
+                    `Sorry, something went wrong when trying to enable ${name}!`,
+                );
+
+                setItemEnabled((prevItemEnabled) => ({
+                    ...prevItemEnabled,
+                    [id]: false,
+                }));
+            }
+        } else {
+            setItemToBeDisabled({ id, name });
         }
     };
 
-    const handleAddItem = () => {};
+    const handleDisableItemClick = async ({ id, name }) => {
+        setIsDisabling(true);
 
-    console.log('items are', items);
-    console.log('searchValue is', searchValue);
+        try {
+            await updateCatalogItem(id, { enabled: false });
 
-    console.log(
-        'fuse Search',
-        fuse.search(searchValue).map(({ item }) => item),
-    );
+            toaster.success(
+                `${name} was successfully disabled and will not be recommended.`,
+            );
+            setItemEnabled((prevItemEnabled) => ({
+                ...prevItemEnabled,
+                [id]: false,
+            }));
+        } catch (error) {
+            toaster.danger(
+                `Sorry, something went wrong when trying to disable ${name}!`,
+            );
+        } finally {
+            setIsDisabling(false);
+            setItemToBeDisabled(null);
+        }
+    };
 
     const filteredItems = useMemo(
         () =>
@@ -128,9 +155,6 @@ const RecommendationCatalog = (props) => {
                 />
             );
         }
-
-        console.log('filteredItems', filteredItems);
-
         if (filteredItems.length === 0) {
             return (
                 <EmptyState
@@ -145,17 +169,18 @@ const RecommendationCatalog = (props) => {
         }
 
         return filteredItems.map(
-            ({ id, itemData, recommendedCount, selectedCount }) => (
-                <Table.Row key={id}>
-                    <Table.TextCell>{itemData.name}</Table.TextCell>
+            ({ squareId, name, enabled, recommendedCount, selectedCount }) => (
+                <Table.Row key={squareId}>
+                    <Table.TextCell>{name}</Table.TextCell>
                     <Table.TextCell isNumber>100</Table.TextCell>
                     <Table.TextCell isNumber>100</Table.TextCell>
                     <Table.Cell justifyContent="flex-end">
-                        <IconButton
-                            icon={TrashIcon}
-                            appearance="minimal"
-                            intent="danger"
-                            onClick={() => setItemToBeDeleted(itemData.name)}
+                        <Switch
+                            checked={itemEnabled[squareId]}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleToggleClick(squareId, name);
+                            }}
                         />
                     </Table.Cell>
                 </Table.Row>
@@ -167,16 +192,6 @@ const RecommendationCatalog = (props) => {
         <DashboardPage
             heading="Recommendation Catalog"
             subheading="Items listed here may appear as a recommended item for customers who receive a recommendation link"
-            sideElement={
-                <Button
-                    size="large"
-                    iconBefore={PlusIcon}
-                    onClick={() => setShowAddItemModal(true)}
-                    appearance="primary"
-                >
-                    Add Item
-                </Button>
-            }
         >
             <Table className={styles.table}>
                 <Table.Head>
@@ -191,43 +206,22 @@ const RecommendationCatalog = (props) => {
                         Number of Times Selected
                     </Table.HeaderCell>
                     <Table.HeaderCell justifyContent="flex-end">
-                        Actions{' '}
+                        Recommendations Enabled
                     </Table.HeaderCell>
                 </Table.Head>
                 <Table.Body>{renderTableBody()}</Table.Body>
             </Table>
             <Dialog
-                isShown={!!itemToBeDeleted}
-                title="Remove item"
-                onCloseComplete={() => setItemToBeDeleted(null)}
-                onConfirm={() => handleRemoveItem(itemToBeDeleted)}
-                confirmLabel="Remove"
+                isShown={!!itemToBeDisabled}
+                title="Disable Item Recommendation"
+                onCloseComplete={() => setItemToBeDisabled(null)}
+                onConfirm={() => handleDisableItemClick(itemToBeDisabled)}
+                confirmLabel="Disable"
                 intent="danger"
+                isConfirmLoading={isDisabling}
             >
-                Are you sure you want to remove{' '}
-                <strong>{itemToBeDeleted}</strong> from your recommendation
-                catalog?
-                <span className={styles.note}>
-                    Note: it will still be kept in your original catalog.
-                </span>
-            </Dialog>
-            <Dialog
-                isShown={showAddItemModal}
-                title="Add item"
-                onCloseComplete={() => setShowAddItemModal(false)}
-                onConfirm={handleAddItem}
-                confirmLabel="Submit"
-            >
-                Add an item from your existing catalog below.
-                <SearchSelect
-                    className={styles.searchSelect}
-                    values={items}
-                    searchKey="item"
-                    placeholder="Search catalog items"
-                    onSelect={(item) => {
-                        setSelectedItem(item);
-                    }}
-                />
+                Are you sure you want to disable recommendations for{' '}
+                <strong>{itemToBeDisabled?.name}</strong>?
             </Dialog>
         </DashboardPage>
     );

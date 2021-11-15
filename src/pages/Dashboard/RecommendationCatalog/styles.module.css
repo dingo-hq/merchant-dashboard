@@ -20,3 +20,9 @@
     justify-content: center;
     background-color: white;
 }
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
