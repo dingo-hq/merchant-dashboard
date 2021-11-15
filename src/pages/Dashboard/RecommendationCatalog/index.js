@@ -1,12 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import {
     Table,
-    IconButton,
-    TrashIcon,
     Dialog,
     toaster,
-    PlusIcon,
-    Button,
     EmptyState,
     SearchIcon,
     InboxIcon,
@@ -15,46 +11,23 @@ import {
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import DashboardPage from '../../../components/DashboardPage';
-import SearchSelect from '../../../components/SearchSelect';
 import getCatalogItems from '../../../api/getCatalogItems';
 import updateCatalogItem from '../../../api/updateCatalogItem';
 import styles from './styles.module.css';
 
-const items = [
-    {
-        item: 'Matcha Milk Tea',
-        recommendedCount: 100,
-        selectedCount: 100,
-    },
-    {
-        item: 'Horchata Milk Tea',
-        recommendedCount: 100,
-        selectedCount: 100,
-    },
-    {
-        item: 'Thai Milk Tea',
-        recommendedCount: 100,
-        selectedCount: 100,
-    },
-    {
-        item: 'Panda Milk Tea',
-        recommendedCount: 100,
-        selectedCount: 100,
-    },
-];
-
-const fuse = new Fuse(items, {
-    threshold: 0.25,
-    keys: ['item'],
-});
-
 const RecommendationCatalog = (props) => {
+    const [itemToBeEnabled, setItemToBeEnabled] = useState(null);
     const [itemToBeDisabled, setItemToBeDisabled] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState([]);
-    const [isDisabling, setIsDisabling] = useState(false);
+    const [isToggling, setIsToggling] = useState(false);
     const [itemEnabled, setItemEnabled] = useState({});
+
+    const fuse = new Fuse(items, {
+        threshold: 0.25,
+        keys: ['name'],
+    });
 
     const fetchCatalogItems = async () => {
         setIsLoading(true);
@@ -79,50 +52,52 @@ const RecommendationCatalog = (props) => {
         fetchCatalogItems();
     }, []);
 
-    const handleToggleClick = async (id, name) => {
-        if (!itemEnabled[id]) {
-            setItemEnabled((prevItemEnabled) => ({
-                ...prevItemEnabled,
-                [id]: true,
-            }));
+    const handleToggleClick = (e, item) => {
+        e.preventDefault();
 
-            try {
-                await updateCatalogItem(id, { enabled: true });
-            } catch (error) {
-                toaster.danger(
-                    `Sorry, something went wrong when trying to enable ${name}!`,
-                );
-
-                setItemEnabled((prevItemEnabled) => ({
-                    ...prevItemEnabled,
-                    [id]: false,
-                }));
-            }
+        if (itemEnabled[item.id]) {
+            setItemToBeDisabled(item);
         } else {
-            setItemToBeDisabled({ id, name });
+            setItemToBeEnabled(item);
         }
     };
 
-    const handleDisableItemClick = async ({ id, name }) => {
-        setIsDisabling(true);
+    const resetToggledItem = (enabled) => {
+        if (enabled) {
+            setItemToBeEnabled(null);
+        } else {
+            setItemToBeDisabled(null);
+        }
+    };
+
+    const confirmToggleItem = async ({ id, name }, enabled) => {
+        setIsToggling(true);
+
+        const successMessage = enabled
+            ? `${name} was successfully enabled and will be available for recommendations.`
+            : `${name} was successfully disabled and will not be recommended.`;
+
+        const errorMessage = enabled
+            ? `Sorry, something went wrong when trying to enable ${name}!`
+            : `Sorry, something went wrong when trying to disable ${name}!`;
 
         try {
-            await updateCatalogItem(id, { enabled: false });
+            await updateCatalogItem(id, { enabled: enabled });
 
-            toaster.success(
-                `${name} was successfully disabled and will not be recommended.`,
-            );
+            toaster.closeAll();
+            toaster.success(successMessage);
             setItemEnabled((prevItemEnabled) => ({
                 ...prevItemEnabled,
-                [id]: false,
+                [id]: enabled,
             }));
+
+            resetToggledItem(enabled);
         } catch (error) {
-            toaster.danger(
-                `Sorry, something went wrong when trying to disable ${name}!`,
-            );
+            toaster.closeAll();
+            toaster.danger(errorMessage);
+            resetToggledItem(enabled);
         } finally {
-            setIsDisabling(false);
-            setItemToBeDisabled(null);
+            setIsToggling(false);
         }
     };
 
@@ -177,10 +152,13 @@ const RecommendationCatalog = (props) => {
                     <Table.Cell justifyContent="flex-end">
                         <Switch
                             checked={itemEnabled[squareId]}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleToggleClick(squareId, name);
-                            }}
+                            onClick={(e) =>
+                                handleToggleClick(e, {
+                                    id: squareId,
+                                    name,
+                                    currentEnabled: enabled,
+                                })
+                            }
                         />
                     </Table.Cell>
                 </Table.Row>
@@ -212,16 +190,27 @@ const RecommendationCatalog = (props) => {
                 <Table.Body>{renderTableBody()}</Table.Body>
             </Table>
             <Dialog
-                isShown={!!itemToBeDisabled}
+                isShown={itemToBeDisabled}
                 title="Disable Item Recommendation"
                 onCloseComplete={() => setItemToBeDisabled(null)}
-                onConfirm={() => handleDisableItemClick(itemToBeDisabled)}
+                onConfirm={() => confirmToggleItem(itemToBeDisabled, false)}
                 confirmLabel="Disable"
                 intent="danger"
-                isConfirmLoading={isDisabling}
+                isConfirmLoading={isToggling}
             >
                 Are you sure you want to disable recommendations for{' '}
                 <strong>{itemToBeDisabled?.name}</strong>?
+            </Dialog>
+            <Dialog
+                isShown={itemToBeEnabled}
+                title="Enable Item Recommendation"
+                onCloseComplete={() => setItemToBeEnabled(null)}
+                onConfirm={() => confirmToggleItem(itemToBeEnabled, true)}
+                confirmLabel="Enable"
+                isConfirmLoading={isToggling}
+            >
+                Are you sure you want to enable recommendations for{' '}
+                <strong>{itemToBeEnabled?.name}</strong>?
             </Dialog>
         </DashboardPage>
     );
