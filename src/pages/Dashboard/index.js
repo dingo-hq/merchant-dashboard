@@ -1,12 +1,18 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { TimelineLineChartIcon, ThListIcon, CogIcon } from 'evergreen-ui';
+import {
+    TimelineLineChartIcon,
+    ThListIcon,
+    CogIcon,
+    PredictiveAnalysisIcon,
+} from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import styles from './styles.module.css';
 import Statistics from './Statistics';
 import Settings from './Settings';
 import RecommendationCatalog from './RecommendationCatalog';
+import Sandbox from './Sandbox';
 
 const BASE_PATH = '/dashboard';
 
@@ -20,6 +26,11 @@ const dashboardItems = [
         icon: ThListIcon,
         path: '/dashboard/catalog',
         label: 'Recommendation Catalog',
+    },
+    {
+        icon: PredictiveAnalysisIcon,
+        path: '/dashboard/sandbox',
+        label: 'Sandbox',
     },
     {
         icon: CogIcon,
@@ -42,13 +53,18 @@ const Dashboard = () => {
             />
             <ProtectedRoute
                 exact
-                path={`${BASE_PATH}/settings`}
-                component={Settings}
+                path={`${BASE_PATH}/catalog`}
+                component={RecommendationCatalog}
             />
             <ProtectedRoute
                 exact
-                path={`${BASE_PATH}/catalog`}
-                component={RecommendationCatalog}
+                path={`${BASE_PATH}/sandbox`}
+                component={Sandbox}
+            />
+            <ProtectedRoute
+                exact
+                path={`${BASE_PATH}/settings`}
+                component={Settings}
             />
         </section>
     );
