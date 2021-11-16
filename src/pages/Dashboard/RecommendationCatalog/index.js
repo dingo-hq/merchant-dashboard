@@ -82,7 +82,7 @@ const RecommendationCatalog = (props) => {
             : `Sorry, something went wrong when trying to disable ${name}!`;
 
         try {
-            await updateCatalogItem(id, { enabled: enabled });
+            await updateCatalogItem(id, { enabled });
 
             toaster.closeAll();
             toaster.success(successMessage);
@@ -144,11 +144,19 @@ const RecommendationCatalog = (props) => {
         }
 
         return filteredItems.map(
-            ({ squareId, name, enabled, recommendedCount, selectedCount }) => (
+            ({
+                squareId,
+                name,
+                enabled,
+                timesRecommended,
+                timesOrderedByRecommended,
+            }) => (
                 <Table.Row key={squareId}>
                     <Table.TextCell>{name}</Table.TextCell>
-                    <Table.TextCell isNumber>100</Table.TextCell>
-                    <Table.TextCell isNumber>100</Table.TextCell>
+                    <Table.TextCell isNumber>{timesRecommended}</Table.TextCell>
+                    <Table.TextCell isNumber>
+                        {timesOrderedByRecommended}
+                    </Table.TextCell>
                     <Table.Cell justifyContent="flex-end">
                         <Switch
                             checked={itemEnabled[squareId]}
@@ -181,7 +189,7 @@ const RecommendationCatalog = (props) => {
                         Number of Times Recommended
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                        Number of Times Selected
+                        Number of Times Ordered by Recommended
                     </Table.HeaderCell>
                     <Table.HeaderCell justifyContent="flex-end">
                         Recommendations Enabled
