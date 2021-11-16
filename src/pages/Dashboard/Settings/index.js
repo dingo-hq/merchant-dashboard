@@ -1,5 +1,6 @@
 import { Button, TextInputField, toaster } from 'evergreen-ui';
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import getMerchantDetails from '../../../api/getMerchantDetails';
 import saveSettings from '../../../api/saveSettings';
 import DashboardPage from '../../../components/DashboardPage';
@@ -29,7 +30,7 @@ const initialSettings = {
     [PROMOTIONAL_DISCOUNT_NUMBER]: 0,
 };
 
-const Settings = (props) => {
+const Settings = ({ pageName }) => {
     const [settings, setSettings] = useState(initialSettings);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -75,7 +76,7 @@ const Settings = (props) => {
 
     return (
         <DashboardPage
-            heading="Settings"
+            heading={pageName}
             subheading="Make changes to how Dingo works with your current business and customers"
             className={styles.page}
         >
@@ -123,6 +124,10 @@ const Settings = (props) => {
             </section>
         </DashboardPage>
     );
+};
+
+Settings.propTypes = {
+    pageName: PropTypes.string.isRequired,
 };
 
 export default Settings;

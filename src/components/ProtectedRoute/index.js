@@ -4,7 +4,7 @@ import { Route, useHistory } from 'react-router-dom';
 import isUnauthorized from '../../utils/isUnauthorized';
 import getMerchantDetails from '../../api/getMerchantDetails';
 
-const ProtectedRoute = ({ exact, path, component }) => {
+const ProtectedRoute = ({ exact, path, Component, name }) => {
     const history = useHistory();
 
     useEffect(() => {
@@ -21,17 +21,25 @@ const ProtectedRoute = ({ exact, path, component }) => {
         checkAuthentication();
     }, []);
 
-    return <Route exact={exact} path={path} component={component} />;
+    return (
+        <Route
+            exact={exact}
+            path={path}
+            component={() => <Component pageName={name} />}
+        />
+    );
 };
 
 ProtectedRoute.propTypes = {
     exact: PropTypes.bool,
     path: PropTypes.string.isRequired,
-    component: PropTypes.element.isRequired,
+    Component: PropTypes.oneOf([PropTypes.element, PropTypes.func]).isRequired,
+    name: PropTypes.string,
 };
 
 ProtectedRoute.defaultProps = {
     exact: false,
+    name: null,
 };
 
 export default ProtectedRoute;

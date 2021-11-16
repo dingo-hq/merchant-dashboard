@@ -1,12 +1,13 @@
 import React from 'react';
 import { StatusIndicator } from 'evergreen-ui';
+import PropTypes from 'prop-types';
 import Section from '../../../components/Section';
 import StatsCardList from '../../../components/StatsCardList';
 import LineGraph from '../../../components/LineGraph';
 import DashboardPage from '../../../components/DashboardPage';
 import styles from './styles.module.css';
 
-const Statistics = (props) => {
+const Statistics = ({ pageName }) => {
     const statusContent = {
         success: {
             color: 'success',
@@ -20,7 +21,7 @@ const Statistics = (props) => {
 
     return (
         <DashboardPage
-            heading="Statistics"
+            heading={pageName}
             subheading="Take a peek at some numbers and see how you're doing at a quick glance"
             sideElement={
                 <StatusIndicator
@@ -41,6 +42,8 @@ const Statistics = (props) => {
     );
 };
 
-Statistics.propTypes = {};
+Statistics.propTypes = {
+    pageName: PropTypes.string.isRequired,
+};
 
 export default Statistics;

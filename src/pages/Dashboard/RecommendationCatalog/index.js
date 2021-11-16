@@ -10,12 +10,13 @@ import {
     Switch,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
+import PropTypes from 'prop-types';
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
 import updateCatalogItem from '../../../api/updateCatalogItem';
 import styles from './styles.module.css';
 
-const RecommendationCatalog = (props) => {
+const RecommendationCatalog = ({ pageName }) => {
     const [itemToBeEnabled, setItemToBeEnabled] = useState(null);
     const [itemToBeDisabled, setItemToBeDisabled] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -176,7 +177,7 @@ const RecommendationCatalog = (props) => {
 
     return (
         <DashboardPage
-            heading="Recommendation Catalog"
+            heading={pageName}
             subheading="Items listed here may appear as a recommended item for customers who receive a recommendation link"
         >
             <Table className={styles.table}>
@@ -224,6 +225,8 @@ const RecommendationCatalog = (props) => {
     );
 };
 
-RecommendationCatalog.propTypes = {};
+RecommendationCatalog.propTypes = {
+    pageName: PropTypes.string.isRequired,
+};
 
 export default RecommendationCatalog;

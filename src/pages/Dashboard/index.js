@@ -4,7 +4,7 @@ import {
     TimelineLineChartIcon,
     ThListIcon,
     CogIcon,
-    PredictiveAnalysisIcon,
+    HelperManagementIcon,
 } from 'evergreen-ui';
 import Navigation from '../../components/Navigation';
 import ProtectedRoute from '../../components/ProtectedRoute';
@@ -19,23 +19,27 @@ const BASE_PATH = '/dashboard';
 const dashboardItems = [
     {
         icon: TimelineLineChartIcon,
-        path: '/dashboard/stats',
+        path: `${BASE_PATH}/stats`,
         label: 'Statistics',
+        component: Statistics,
     },
     {
         icon: ThListIcon,
-        path: '/dashboard/catalog',
+        path: `${BASE_PATH}/catalog`,
         label: 'Recommendation Catalog',
+        component: RecommendationCatalog,
     },
     {
-        icon: PredictiveAnalysisIcon,
-        path: '/dashboard/sandbox',
+        icon: HelperManagementIcon,
+        path: `${BASE_PATH}/sandbox`,
         label: 'Sandbox',
+        component: Sandbox,
     },
     {
         icon: CogIcon,
-        path: '/dashboard/settings',
+        path: `${BASE_PATH}/settings`,
         label: 'Settings',
+        component: Settings,
     },
 ];
 
@@ -46,26 +50,15 @@ const Dashboard = () => {
             <Route exact path={BASE_PATH}>
                 <Redirect to={`${BASE_PATH}/stats`} />
             </Route>
-            <ProtectedRoute
-                exact
-                path={`${BASE_PATH}/stats`}
-                component={Statistics}
-            />
-            <ProtectedRoute
-                exact
-                path={`${BASE_PATH}/catalog`}
-                component={RecommendationCatalog}
-            />
-            <ProtectedRoute
-                exact
-                path={`${BASE_PATH}/sandbox`}
-                component={Sandbox}
-            />
-            <ProtectedRoute
-                exact
-                path={`${BASE_PATH}/settings`}
-                component={Settings}
-            />
+            {dashboardItems.map(({ path, label, component }) => (
+                <ProtectedRoute
+                    exact
+                    key={label}
+                    path={path}
+                    Component={component}
+                    name={label}
+                />
+            ))}
         </section>
     );
 };
