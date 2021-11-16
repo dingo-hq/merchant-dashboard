@@ -12,6 +12,36 @@ const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {
     const location = useLocation();
     const { pathname } = location;
 
+    const dashboardNavItems = dashboardItems.map(({ icon, path, label }) => (
+        <Button
+            size="large"
+            appearance="minimal"
+            className={classNames(
+                styles.item,
+                pathname === path && styles.active,
+            )}
+            key={path}
+            iconBefore={icon}
+            onClick={() => {
+                history.push(path);
+            }}
+        >
+            {label}
+        </Button>
+    ));
+
+    const pageNavItems = navItems.map(({ icon, label }) => (
+        <Button
+            key={label}
+            size="large"
+            appearance="minimal"
+            className={styles.item}
+            iconBefore={icon}
+        >
+            {label}
+        </Button>
+    ));
+
     return (
         <nav className={classNames(styles.nav, edgeShadow && styles.shadow)}>
             <ul className={styles.navItems}>
@@ -22,36 +52,8 @@ const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {
                         window.location.href = '/';
                     }}
                 />
-                {navItems.map(({ icon, label }) => (
-                    <Button
-                        key={label}
-                        size="large"
-                        appearance="minimal"
-                        className={styles.item}
-                        iconBefore={icon}
-                    >
-                        {label}
-                    </Button>
-                ))}
-            </ul>
-            <ul className={styles.dashboardItems}>
-                {dashboardItems.map(({ icon, path, label }) => (
-                    <Button
-                        size="large"
-                        appearance="minimal"
-                        className={classNames(
-                            styles.item,
-                            pathname === path && styles.active,
-                        )}
-                        key={path}
-                        iconBefore={icon}
-                        onClick={() => {
-                            history.push(path);
-                        }}
-                    >
-                        {label}
-                    </Button>
-                ))}
+                {dashboardNavItems}
+                {pageNavItems}
             </ul>
             {showLogOut && (
                 <Button
