@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import DashboardPage from '../../../components/DashboardPage';
 
 const Sandbox = ({ pageName }) => {
-    return <DashboardPage heading={pageName}></DashboardPage>;
+    return (
+        <DashboardPage
+            heading={pageName}
+            subheading="Simulate and preview how items are recommended to customers"
+        ></DashboardPage>
+    );
 };
 
 Sandbox.propTypes = {
