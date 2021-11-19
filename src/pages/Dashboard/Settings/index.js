@@ -193,21 +193,21 @@ const Settings = ({ pageName }) => {
                         </div>
                     </li>
                     <li>{promotionInput}</li>
-                    {/* <li>
+                    <li>
                         <TextInputField
-                            label="Discount duration"
-                            description="The amount of time the discount is valid for"
-                            type="date"
-                            value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
+                            label="Discount duration (in days)"
+                            description="The number of days the discount is valid for"
+                            type="number"
+                            value={settings[PROMOTIONAL_DISCOUNT_DURATION]}
                             disabled={isLoading || isSaving}
                             onChange={(e) =>
                                 handleSettingChange(
                                     parseInt(e.target.value),
-                                    PROMOTIONAL_DISCOUNT_NUMBER,
+                                    PROMOTIONAL_DISCOUNT_DURATION,
                                 )
                             }
                         />
-                    </li> */}
+                    </li>
                     {toggles.map(({ name, label, note }) => (
                         <Toggle
                             key={name}
