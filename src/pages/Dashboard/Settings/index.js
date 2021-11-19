@@ -12,7 +12,15 @@ import styles from './styles.module.css';
 
 const PAUSED = 'paused';
 const DISCOUNT_ENABLED = 'discountEnabled';
-const PROMOTIONAL_DISCOUNT_NUMBER = 'promotionalDiscountNumber';
+const PROMOTIONAL_DISCOUNT_TYPE = 'promotionDiscountType';
+const LOYALTY_POINTS = 'loyaltyPoints';
+const PERCENTAGE_DISCOUNT = 'percentageDiscount';
+const PROMOTIONAL_DISCOUNT_DURATION = 'promotionalDiscountDuration';
+
+const promotionalDiscountTypes = {
+    LOYALTY: 'loyalty',
+    PERCENTAGE: 'percentage',
+};
 
 const toggles = [
     {
@@ -30,24 +38,22 @@ const toggles = [
 const initialSettings = {
     [PAUSED]: false,
     [DISCOUNT_ENABLED]: false,
-    [PROMOTIONAL_DISCOUNT_NUMBER]: 0,
-};
-
-const promotionTypes = {
-    PERCENTAGE_DISCOUNT: 'PERCENTAGE_DISCOUNT',
-    LOYALTY_POINTS: 'LOYALTY_POINTS',
+    [PROMOTIONAL_DISCOUNT_TYPE]: promotionalDiscountTypes.LOYALTY,
+    [LOYALTY_POINTS]: 0,
+    [PERCENTAGE_DISCOUNT]: 10,
+    [PROMOTIONAL_DISCOUNT_DURATION]: 7,
 };
 
 const promotionMethods = [
     {
-        label: 'Percentage Discount',
-        imageSrc: priceTag,
-        type: promotionTypes.PERCENTAGE_DISCOUNT,
-    },
-    {
         label: 'Loyalty Points',
         imageSrc: shoppingsBags,
-        type: promotionTypes.LOYALTY_POINTS,
+        type: promotionalDiscountTypes.LOYALTY,
+    },
+    {
+        label: 'Percentage Discount',
+        imageSrc: priceTag,
+        type: promotionalDiscountTypes.PERCENTAGE,
     },
 ];
 
@@ -56,7 +62,7 @@ const Settings = ({ pageName }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [selectedPromotionMethod, setSelectedPromotionMethod] = useState(
-        promotionTypes.PERCENTAGE_DISCOUNT,
+        promotionalDiscountTypes.LOYALTY,
     );
 
     useEffect(() => {
@@ -105,12 +111,12 @@ const Settings = ({ pageName }) => {
             type="number"
             min={0}
             max={100}
-            value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
+            value={settings[PERCENTAGE_DISCOUNT]}
             disabled={isLoading || isSaving}
             onChange={(e) =>
                 handleSettingChange(
                     parseInt(e.target.value),
-                    PROMOTIONAL_DISCOUNT_NUMBER,
+                    PERCENTAGE_DISCOUNT,
                 )
             }
         />
@@ -123,21 +129,18 @@ const Settings = ({ pageName }) => {
             type="number"
             min={0}
             max={100}
-            value={settings[PROMOTIONAL_DISCOUNT_NUMBER]}
+            value={settings[LOYALTY_POINTS]}
             disabled={isLoading || isSaving}
             onChange={(e) =>
-                handleSettingChange(
-                    parseInt(e.target.value),
-                    PROMOTIONAL_DISCOUNT_NUMBER,
-                )
+                handleSettingChange(parseInt(e.target.value), LOYALTY_POINTS)
             }
         />
     );
 
     const promotionInput =
-        selectedPromotionMethod === promotionTypes.PERCENTAGE_DISCOUNT
-            ? percentageDiscountInput
-            : loyaltyPointsInput;
+        selectedPromotionMethod === promotionalDiscountTypes.LOYALTY
+            ? loyaltyPointsInput
+            : percentageDiscountInput;
 
     return (
         <DashboardPage
