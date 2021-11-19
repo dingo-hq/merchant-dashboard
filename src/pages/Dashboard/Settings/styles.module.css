@@ -76,3 +76,7 @@
 .promotionOptionImage {
     width: 75%;
 }
+
+.promotionOptionDisabled:hover {
+    cursor: not-allowed;
+}

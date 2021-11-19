@@ -12,14 +12,14 @@ import styles from './styles.module.css';
 
 const PAUSED = 'paused';
 const DISCOUNT_ENABLED = 'discountEnabled';
-const PROMOTIONAL_DISCOUNT_TYPE = 'promotionDiscountType';
+const PROMOTIONAL_DISCOUNT_TYPE = 'promotionalDiscountType';
 const LOYALTY_POINTS = 'loyaltyPoints';
 const PERCENTAGE_DISCOUNT = 'percentageDiscount';
 const PROMOTIONAL_DISCOUNT_DURATION = 'promotionalDiscountDuration';
 
 const promotionalDiscountTypes = {
-    LOYALTY: 'loyalty',
-    PERCENTAGE: 'percentage',
+    LOYALTY: 'LOYALTY',
+    PERCENTAGE: 'PERCENTAGE',
 };
 
 const toggles = [
@@ -61,9 +61,6 @@ const Settings = ({ pageName }) => {
     const [settings, setSettings] = useState(initialSettings);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [selectedPromotionMethod, setSelectedPromotionMethod] = useState(
-        promotionalDiscountTypes.LOYALTY,
-    );
 
     useEffect(() => {
         const fetchMerchantDetails = async () => {
@@ -104,6 +101,8 @@ const Settings = ({ pageName }) => {
         }
     };
 
+    const isDisabled = isLoading || isSaving;
+
     const percentageDiscountInput = (
         <TextInputField
             label="Percentage discount amount"
@@ -112,7 +111,7 @@ const Settings = ({ pageName }) => {
             min={0}
             max={100}
             value={settings[PERCENTAGE_DISCOUNT]}
-            disabled={isLoading || isSaving}
+            disabled={isDisabled}
             onChange={(e) =>
                 handleSettingChange(
                     parseInt(e.target.value),
@@ -130,7 +129,7 @@ const Settings = ({ pageName }) => {
             min={0}
             max={100}
             value={settings[LOYALTY_POINTS]}
-            disabled={isLoading || isSaving}
+            disabled={isDisabled}
             onChange={(e) =>
                 handleSettingChange(parseInt(e.target.value), LOYALTY_POINTS)
             }
@@ -138,7 +137,7 @@ const Settings = ({ pageName }) => {
     );
 
     const promotionInput =
-        selectedPromotionMethod === promotionalDiscountTypes.LOYALTY
+        settings[PROMOTIONAL_DISCOUNT_TYPE] === promotionalDiscountTypes.LOYALTY
             ? loyaltyPointsInput
             : percentageDiscountInput;
 
@@ -166,11 +165,19 @@ const Settings = ({ pageName }) => {
                                         key={label}
                                         className={classNames(
                                             styles.promotionOption,
-                                            selectedPromotionMethod === type &&
+                                            !isDisabled &&
+                                                settings[
+                                                    PROMOTIONAL_DISCOUNT_TYPE
+                                                ] === type &&
                                                 styles.promotionOptionSelected,
+                                            isDisabled &&
+                                                styles.promotionOptionDisabled,
                                         )}
                                         onClick={() =>
-                                            setSelectedPromotionMethod(type)
+                                            handleSettingChange(
+                                                type,
+                                                PROMOTIONAL_DISCOUNT_TYPE,
+                                            )
                                         }
                                     >
                                         <img
