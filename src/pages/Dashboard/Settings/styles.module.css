@@ -28,3 +28,49 @@
 .label {
     flex: 1;
 }
+
+.promotionOptionsLabel {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.promotionOptionsDescription {
+    display: block;
+    color: #696f8c;
+    font-size: 12px;
+    margin: 4px 0 0 0;
+}
+
+.promotionOptions {
+    display: flex;
+    margin: 16px 0;
+    gap: 32px;
+}
+
+.promotionOption {
+    margin: 0;
+    text-align: center;
+    background-color: white;
+    border: 2px solid #E6E8F0;
+    border-radius: 8px;
+    padding: 16px;
+    width: 196px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.promotionOption:hover {
+    cursor: pointer;
+}
+
+.promotionOptionSelected {
+    border-color: #E38824;
+}
+
+.promotionOptionImage {
+    width: 75%;
+}
