@@ -55,8 +55,9 @@ const Settings = ({ pageName }) => {
     const [settings, setSettings] = useState(initialSettings);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [selectedPromotionMethod, setSelectedPromotionMethod] =
-        useState(null);
+    const [selectedPromotionMethod, setSelectedPromotionMethod] = useState(
+        promotionTypes.PERCENTAGE_DISCOUNT,
+    );
 
     useEffect(() => {
         const fetchMerchantDetails = async () => {
