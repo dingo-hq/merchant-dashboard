@@ -10,12 +10,16 @@ import priceTag from '../../../assets/price-tag-circle.svg';
 import shoppingsBags from '../../../assets/shopping-bags-circle.svg';
 import styles from './styles.module.css';
 
+const DINGO_STORAGE_SETTINGS = 'dingoStorageSettings';
+
 const PAUSED = 'paused';
 const DISCOUNT_ENABLED = 'discountEnabled';
 const PROMOTIONAL_DISCOUNT_TYPE = 'promotionalDiscountType';
 const LOYALTY_POINTS = 'loyaltyPoints';
 const PERCENTAGE_DISCOUNT = 'percentageDiscount';
 const PROMOTIONAL_DISCOUNT_DURATION = 'promotionalDiscountDuration';
+const SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS =
+    'suppressRecommendationCatalogWarnings';
 
 const promotionalDiscountTypes = {
     LOYALTY: 'LOYALTY',
@@ -35,13 +39,16 @@ const toggles = [
     },
 ];
 
-const initialSettings = {
-    [PAUSED]: false,
-    [DISCOUNT_ENABLED]: false,
-    [PROMOTIONAL_DISCOUNT_TYPE]: promotionalDiscountTypes.LOYALTY,
-    [LOYALTY_POINTS]: 0,
-    [PERCENTAGE_DISCOUNT]: 10,
-    [PROMOTIONAL_DISCOUNT_DURATION]: 7,
+const storageToggles = [
+    {
+        name: SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS,
+        label: 'Suppress recommendation catalog warning messages',
+        note: "Don't show warning messages when toggling on or off items in the recommendation catalog",
+    },
+];
+
+const initialStorageSettings = {
+    [SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS]: false,
 };
 
 const promotionMethods = [
@@ -58,7 +65,8 @@ const promotionMethods = [
 ];
 
 const Settings = ({ pageName }) => {
-    const [settings, setSettings] = useState(initialSettings);
+    const [settings, setSettings] = useState({});
+    const [storageSettings, setStorageSettings] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -76,7 +84,24 @@ const Settings = ({ pageName }) => {
             }
         };
 
+        const getStorageSettings = () => {
+            const prevStorageSettings = JSON.parse(
+                localStorage.getItem(DINGO_STORAGE_SETTINGS),
+            );
+
+            if (prevStorageSettings) {
+                setStorageSettings(prevStorageSettings);
+            } else {
+                setStorageSettings(initialStorageSettings);
+                localStorage.setItem(
+                    DINGO_STORAGE_SETTINGS,
+                    JSON.stringify(initialStorageSettings),
+                );
+            }
+        };
+
         fetchMerchantDetails();
+        getStorageSettings();
     }, []);
 
     const handleSettingChange = (value, setting) => {
@@ -89,6 +114,12 @@ const Settings = ({ pageName }) => {
     const handleSave = async () => {
         setIsSaving(true);
 
+        // Save storage-specific settings
+        localStorage.setItem(
+            DINGO_STORAGE_SETTINGS,
+            JSON.stringify(storageSettings),
+        );
+
         try {
             await saveSettings(settings);
             toaster.success('Your changes were successfully saved.');
@@ -99,6 +130,13 @@ const Settings = ({ pageName }) => {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const handleStorageSettingChange = (value, setting) => {
+        setStorageSettings((prevStorageSettings) => ({
+            ...prevStorageSettings,
+            [setting]: value,
+        }));
     };
 
     const isDisabled = isLoading || isSaving;
@@ -208,6 +246,17 @@ const Settings = ({ pageName }) => {
                             }
                         />
                     </li>
+                    {storageToggles.map(({ name, label, note }) => (
+                        <Toggle
+                            key={name}
+                            checked={storageSettings[name]}
+                            name={name}
+                            label={label}
+                            note={note}
+                            onChange={handleStorageSettingChange}
+                            className={styles.toggle}
+                        />
+                    ))}
                     {toggles.map(({ name, label, note }) => (
                         <Toggle
                             key={name}
