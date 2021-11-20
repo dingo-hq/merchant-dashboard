@@ -41,7 +41,7 @@ const dangerousToggles = [
     {
         name: PAUSED,
         label: 'Pause Dingo',
-        note: 'Temporarily disable Dingo integration with your business',
+        note: "Temporarily disable your business's integration with Dingo",
     },
 ];
 
