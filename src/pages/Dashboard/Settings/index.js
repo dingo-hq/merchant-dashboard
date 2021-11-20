@@ -8,7 +8,6 @@ import DashboardPage from '../../../components/DashboardPage';
 import Toggle from '../../../components/Toggle';
 import priceTag from '../../../assets/price-tag-circle.svg';
 import shoppingsBags from '../../../assets/shopping-bags-circle.svg';
-import { DASHBOARD_STORAGE_SETTINGS } from '../../../constants/storage';
 import {
     PAUSED,
     DISCOUNT_ENABLED,
@@ -32,23 +31,16 @@ const toggles = [
         note: 'Control whether or not you want Dingo to send discounts towards recommended items',
     },
     {
+        name: DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
+        label: 'Disable recommendation catalog warning messages',
+        note: "Don't show warning messages when toggling on or off items in the recommendation catalog",
+    },
+    {
         name: PAUSED,
         label: 'Pause Dingo',
         note: 'Turning this setting ON means customers will stop receiving recommendation links following a purchase until this setting is turned OFF',
     },
 ];
-
-const storageToggles = [
-    {
-        name: DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
-        label: 'Disable recommendation catalog warning messages',
-        note: "Don't show warning messages when toggling on or off items in the recommendation catalog",
-    },
-];
-
-const initialStorageSettings = {
-    [DISABLE_RECOMMENDATION_CATALOG_WARNINGS]: false,
-};
 
 const promotionMethods = [
     {
@@ -65,42 +57,20 @@ const promotionMethods = [
 
 const Settings = ({ pageName }) => {
     const [settings, setSettings] = useState({});
-    const [storageSettings, setStorageSettings] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    useEffect(() => {
-        const fetchMerchantDetails = async () => {
-            setIsLoading(true);
+    useEffect(async () => {
+        setIsLoading(true);
 
-            try {
-                const { data } = await getMerchantDetails();
-                const { config } = data;
-                setSettings(config);
-            } catch (error) {
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        const getStorageSettings = () => {
-            const prevStorageSettings = JSON.parse(
-                localStorage.getItem(DASHBOARD_STORAGE_SETTINGS),
-            );
-
-            if (prevStorageSettings) {
-                setStorageSettings(prevStorageSettings);
-            } else {
-                setStorageSettings(initialStorageSettings);
-                localStorage.setItem(
-                    DASHBOARD_STORAGE_SETTINGS,
-                    JSON.stringify(initialStorageSettings),
-                );
-            }
-        };
-
-        fetchMerchantDetails();
-        getStorageSettings();
+        try {
+            const { data } = await getMerchantDetails();
+            const { config } = data;
+            setSettings(config);
+        } catch (error) {
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
 
     const handleSettingChange = (value, setting) => {
@@ -113,12 +83,6 @@ const Settings = ({ pageName }) => {
     const handleSave = async () => {
         setIsSaving(true);
 
-        // Save storage-specific settings
-        localStorage.setItem(
-            DASHBOARD_STORAGE_SETTINGS,
-            JSON.stringify(storageSettings),
-        );
-
         try {
             await saveSettings(settings);
             toaster.success('Your changes were successfully saved.');
@@ -129,13 +93,6 @@ const Settings = ({ pageName }) => {
         } finally {
             setIsSaving(false);
         }
-    };
-
-    const handleStorageSettingChange = (value, setting) => {
-        setStorageSettings((prevStorageSettings) => ({
-            ...prevStorageSettings,
-            [setting]: value,
-        }));
     };
 
     const isDisabled = isLoading || isSaving;
@@ -245,17 +202,6 @@ const Settings = ({ pageName }) => {
                             }
                         />
                     </li>
-                    {storageToggles.map(({ name, label, note }) => (
-                        <Toggle
-                            key={name}
-                            checked={storageSettings[name]}
-                            name={name}
-                            label={label}
-                            note={note}
-                            onChange={handleStorageSettingChange}
-                            className={styles.toggle}
-                        />
-                    ))}
                     {toggles.map(({ name, label, note }) => (
                         <Toggle
                             key={name}
