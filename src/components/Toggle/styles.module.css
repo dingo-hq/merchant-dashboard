@@ -17,3 +17,7 @@
     font-size: 12px;
     margin: 4px 0 0 0;
 }
+
+.danger > input:checked + div {
+    background-color: #D14343 !important;
+}

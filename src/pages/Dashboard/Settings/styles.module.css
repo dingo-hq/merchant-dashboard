@@ -80,3 +80,16 @@
 .promotionOptionDisabled:hover {
     cursor: not-allowed;
 }
+
+.dangerSectionTitle {
+    margin: 24px 0 8px 0;
+    font-size: 24px;
+}
+
+.dangerSection {
+    margin: 0;
+    list-style: none;
+    border: 2px solid #D14343;
+    border-radius: 8px;
+    padding: 16px;
+}

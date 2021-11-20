@@ -32,13 +32,16 @@ const toggles = [
     },
     {
         name: DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
-        label: 'Disable recommendation catalog warning messages',
+        label: 'Turn off recommendation catalog warning messages',
         note: "Don't show warning messages when toggling on or off items in the recommendation catalog",
     },
+];
+
+const dangerousToggles = [
     {
         name: PAUSED,
         label: 'Pause Dingo',
-        note: 'Turning this setting ON means customers will stop receiving recommendation links following a purchase until this setting is turned OFF',
+        note: 'Temporarily disable Dingo integration with your business',
     },
 ];
 
@@ -203,17 +206,39 @@ const Settings = ({ pageName }) => {
                         />
                     </li>
                     {toggles.map(({ name, label, note }) => (
-                        <Toggle
-                            key={name}
-                            checked={settings[name]}
-                            name={name}
-                            label={label}
-                            note={note}
-                            onChange={handleSettingChange}
-                            className={styles.toggle}
-                            disabled={isLoading || isSaving}
-                        />
+                        <li key={name}>
+                            <Toggle
+                                checked={settings[name]}
+                                name={name}
+                                label={label}
+                                note={note}
+                                onChange={handleSettingChange}
+                                className={styles.toggle}
+                                disabled={isLoading || isSaving}
+                            />
+                        </li>
                     ))}
+                    <li>
+                        <h2 className={styles.dangerSectionTitle}>
+                            Danger Zone
+                        </h2>
+                        <ul className={styles.dangerSection}>
+                            {dangerousToggles.map(({ name, label, note }) => (
+                                <li key={name}>
+                                    <Toggle
+                                        checked={settings[name]}
+                                        name={name}
+                                        label={label}
+                                        note={note}
+                                        onChange={handleSettingChange}
+                                        className={styles.toggle}
+                                        disabled={isLoading || isSaving}
+                                        intent="danger"
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
                 </ul>
                 <Button
                     appearance="primary"

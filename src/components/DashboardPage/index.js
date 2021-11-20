@@ -15,7 +15,7 @@ const DashboardPage = ({
                 <header className={styles.header}>
                     <section className={styles.headings}>
                         <h1 className={styles.heading}>{heading}</h1>
-                        <h2 className={styles.subheading}>{subheading}</h2>
+                        <p className={styles.subheading}>{subheading}</p>
                     </section>
                     {sideElement}
                 </header>
