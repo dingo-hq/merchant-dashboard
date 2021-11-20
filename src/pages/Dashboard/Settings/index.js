@@ -151,9 +151,9 @@ const Settings = ({ pageName }) => {
                             Discount method
                         </span>
                         <span className={styles.promotionOptionsDescription}>
-                            When a customer selects a recommended item through a
-                            recommendation link, they may receive a percentage
-                            discount or loyalty points upon redemption
+                            The type of promotional discount your customers may
+                            redeem after they select an item from a
+                            recommendation link
                         </span>
                         <div className={styles.promotionOptions}>
                             {promotionMethods.map(
