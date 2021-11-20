@@ -14,13 +14,17 @@
     font-weight: 500 !important;
 }
 
+.landing {
+    background-color: #fafafa;
+}
+
 .landingContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 64px;
-    padding-top: 196px;
-    padding-bottom: 196px;
+    padding: 64px inherit;
+    height: 960px;
 }
 
 .landingContent {

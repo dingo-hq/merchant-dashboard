@@ -90,9 +90,9 @@ const Home = () => {
                             </span>
                         </h1>
                         <p className={styles.landingDescription}>
-                            Looking to grow your customer base or find ways to
-                            keep them coming back? Take control of your business
-                            by integrating your Square account with Dingo!
+                            Looking to grow your customer base or increase
+                            customer retention? Take control of your business by
+                            integrating your Square account with Dingo today!
                         </p>
                         {ctaButton}
                     </div>
@@ -115,7 +115,7 @@ const Home = () => {
                         />
                     </div>
                     <div className={styles.missionContent}>
-                        <h2 className={styles.sectionTitle}>Our Mission</h2>
+                        <h2 className={styles.sectionTitle}>What We Do</h2>
                         <p className={styles.missionDescription}>
                             Dingo aims to find ways to help businesses continue
                             bringing customers back. Whether it&apos;s buying a
