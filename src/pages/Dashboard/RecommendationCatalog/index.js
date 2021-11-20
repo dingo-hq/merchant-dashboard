@@ -36,8 +36,7 @@ const RecommendationCatalog = ({ pageName }) => {
         setIsLoading(true);
 
         try {
-            const { data } = await getCatalogItems();
-            const { catalogItems, disableWarnings } = data;
+            const { catalogItems, disableWarnings } = await getCatalogItems();
 
             setWarningMessagesDisabled(disableWarnings);
             setItems(catalogItems);

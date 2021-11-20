@@ -26,6 +26,7 @@
             "asyncArrow": "always"
         }],
         "react/require-default-props": "warn",
+        "react/jsx-key": "warn",
         "import/order": "warn",
         "no-unused-vars": "warn",
         "multiline-ternary": "off",
