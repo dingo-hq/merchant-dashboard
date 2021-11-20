@@ -24,6 +24,8 @@ const RecommendationCatalog = ({ pageName }) => {
     const [isLoading, setIsLoading] = useState([]);
     const [isToggling, setIsToggling] = useState(false);
     const [itemEnabled, setItemEnabled] = useState({});
+    const [warningMessagesDisabled, setWarningMessagesDisabled] =
+        useState(false);
 
     const fuse = new Fuse(items, {
         threshold: 0.25,
@@ -35,9 +37,11 @@ const RecommendationCatalog = ({ pageName }) => {
 
         try {
             const { data } = await getCatalogItems();
+            const { catalogItems, disableWarnings } = data;
 
-            setItems(data);
-            data.forEach(({ squareId, enabled }) => {
+            setWarningMessagesDisabled(disableWarnings);
+            setItems(catalogItems);
+            catalogItems.forEach(({ squareId, enabled }) => {
                 setItemEnabled((prevItemEnabled) => ({
                     ...prevItemEnabled,
                     [squareId]: enabled,
@@ -57,19 +61,17 @@ const RecommendationCatalog = ({ pageName }) => {
         e.preventDefault();
 
         if (itemEnabled[item.id]) {
-            setItemToBeDisabled(item);
-            // if (warningMessagesDisabled) {
-            //     confirmToggleItem(item, false);
-            // } else {
-            //     setItemToBeDisabled(item);
-            // }
+            if (warningMessagesDisabled) {
+                confirmToggleItem(item, false);
+            } else {
+                setItemToBeDisabled(item);
+            }
         } else {
-            setItemToBeEnabled(item);
-            // if (warningMessagesDisabled) {
-            //     confirmToggleItem(item, true);
-            // } else {
-            //     setItemToBeEnabled(item);
-            // }
+            if (warningMessagesDisabled) {
+                confirmToggleItem(item, true);
+            } else {
+                setItemToBeEnabled(item);
+            }
         }
     };
 
