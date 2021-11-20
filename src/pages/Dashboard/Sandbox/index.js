@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
+import ItemsList from './ItemsList';
+import ItemsSection from './ItemsSection';
 
 const Sandbox = ({ pageName }) => {
     const [recommendedItems, setRecommendedItems] = useState([]);
@@ -21,11 +24,9 @@ const Sandbox = ({ pageName }) => {
             heading={pageName}
             subheading="Simulate and preview how items are recommended to customers"
         >
-            <ul>
-                {recommendedItems.map(({ name }) => (
-                    <li>{name}</li>
-                ))}
-            </ul>
+            <DragDropContext>
+                <ItemsSection items={recommendedItems} />
+            </DragDropContext>
         </DashboardPage>
     );
 };
