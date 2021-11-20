@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../constants';
+import { BASE_URL } from '../constants/urls';
 
 export default async function authRequest(method, url, data = {}) {
     const response = await axios({

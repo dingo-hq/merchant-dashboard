@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
 import SquareLogo from '../../components/SquareLogo';
-import { SQUARE_OAUTH_URL } from '../../constants';
+import { SQUARE_OAUTH_URL } from '../../constants/urls';
 import business from '../../assets/business.svg';
 import shoppingBags from '../../assets/shopping-bags.svg';
 import priceTag from '../../assets/price-tag.svg';

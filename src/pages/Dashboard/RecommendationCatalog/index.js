@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
 import updateCatalogItem from '../../../api/updateCatalogItem';
+import { DASHBOARD_STORAGE_SETTINGS } from '../../../constants/storage';
+import { DISABLE_RECOMMENDATION_CATALOG_WARNINGS } from '../../../constants/settings';
 import styles from './styles.module.css';
 
 const RecommendationCatalog = ({ pageName }) => {
@@ -24,6 +26,12 @@ const RecommendationCatalog = ({ pageName }) => {
     const [isLoading, setIsLoading] = useState([]);
     const [isToggling, setIsToggling] = useState(false);
     const [itemEnabled, setItemEnabled] = useState({});
+
+    const dashboardStorageSettings = JSON.parse(
+        localStorage.getItem(DASHBOARD_STORAGE_SETTINGS),
+    );
+    const warningMessagesDisabled =
+        dashboardStorageSettings[DISABLE_RECOMMENDATION_CATALOG_WARNINGS];
 
     const fuse = new Fuse(items, {
         threshold: 0.25,
@@ -57,9 +65,17 @@ const RecommendationCatalog = ({ pageName }) => {
         e.preventDefault();
 
         if (itemEnabled[item.id]) {
-            setItemToBeDisabled(item);
+            if (warningMessagesDisabled) {
+                confirmToggleItem(item, false);
+            } else {
+                setItemToBeDisabled(item);
+            }
         } else {
-            setItemToBeEnabled(item);
+            if (warningMessagesDisabled) {
+                confirmToggleItem(item, true);
+            } else {
+                setItemToBeEnabled(item);
+            }
         }
     };
 
@@ -81,6 +97,12 @@ const RecommendationCatalog = ({ pageName }) => {
         const errorMessage = enabled
             ? `Sorry, something went wrong when trying to enable ${name}!`
             : `Sorry, something went wrong when trying to disable ${name}!`;
+
+        // Set the intended state first so there is no delay when toggling the switch
+        setItemEnabled((prevItemEnabled) => ({
+            ...prevItemEnabled,
+            [id]: enabled,
+        }));
 
         try {
             await updateCatalogItem(id, { enabled });

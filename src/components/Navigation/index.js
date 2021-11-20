@@ -4,7 +4,7 @@ import { LogOutIcon, Button } from 'evergreen-ui';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import logo from '../../assets/logo.png';
-import { APP_LOGOUT_URL } from '../../constants';
+import { APP_LOGOUT_URL } from '../../constants/urls';
 import styles from './styles.module.css';
 
 const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {

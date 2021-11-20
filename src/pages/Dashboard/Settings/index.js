@@ -8,18 +8,17 @@ import DashboardPage from '../../../components/DashboardPage';
 import Toggle from '../../../components/Toggle';
 import priceTag from '../../../assets/price-tag-circle.svg';
 import shoppingsBags from '../../../assets/shopping-bags-circle.svg';
+import { DASHBOARD_STORAGE_SETTINGS } from '../../../constants/storage';
+import {
+    PAUSED,
+    DISCOUNT_ENABLED,
+    PROMOTIONAL_DISCOUNT_TYPE,
+    LOYALTY_POINTS,
+    PERCENTAGE_DISCOUNT,
+    PROMOTIONAL_DISCOUNT_DURATION,
+    DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
+} from '../../../constants/settings';
 import styles from './styles.module.css';
-
-const DINGO_STORAGE_SETTINGS = 'dingoStorageSettings';
-
-const PAUSED = 'paused';
-const DISCOUNT_ENABLED = 'discountEnabled';
-const PROMOTIONAL_DISCOUNT_TYPE = 'promotionalDiscountType';
-const LOYALTY_POINTS = 'loyaltyPoints';
-const PERCENTAGE_DISCOUNT = 'percentageDiscount';
-const PROMOTIONAL_DISCOUNT_DURATION = 'promotionalDiscountDuration';
-const SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS =
-    'suppressRecommendationCatalogWarnings';
 
 const promotionalDiscountTypes = {
     LOYALTY: 'LOYALTY',
@@ -29,8 +28,8 @@ const promotionalDiscountTypes = {
 const toggles = [
     {
         name: DISCOUNT_ENABLED,
-        label: 'Enable discounts',
-        note: 'Control whether or not you want customers to receive promotional discounts after submitting a recommended item',
+        label: 'Send recommendation discounts',
+        note: 'Control whether or not you want Dingo to send discounts towards recommended items',
     },
     {
         name: PAUSED,
@@ -41,14 +40,14 @@ const toggles = [
 
 const storageToggles = [
     {
-        name: SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS,
-        label: 'Suppress recommendation catalog warning messages',
+        name: DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
+        label: 'Disable recommendation catalog warning messages',
         note: "Don't show warning messages when toggling on or off items in the recommendation catalog",
     },
 ];
 
 const initialStorageSettings = {
-    [SUPPRESS_RECOMMENDATION_CATALOG_WARNINGS]: false,
+    [DISABLE_RECOMMENDATION_CATALOG_WARNINGS]: false,
 };
 
 const promotionMethods = [
@@ -86,7 +85,7 @@ const Settings = ({ pageName }) => {
 
         const getStorageSettings = () => {
             const prevStorageSettings = JSON.parse(
-                localStorage.getItem(DINGO_STORAGE_SETTINGS),
+                localStorage.getItem(DASHBOARD_STORAGE_SETTINGS),
             );
 
             if (prevStorageSettings) {
@@ -94,7 +93,7 @@ const Settings = ({ pageName }) => {
             } else {
                 setStorageSettings(initialStorageSettings);
                 localStorage.setItem(
-                    DINGO_STORAGE_SETTINGS,
+                    DASHBOARD_STORAGE_SETTINGS,
                     JSON.stringify(initialStorageSettings),
                 );
             }
@@ -116,7 +115,7 @@ const Settings = ({ pageName }) => {
 
         // Save storage-specific settings
         localStorage.setItem(
-            DINGO_STORAGE_SETTINGS,
+            DASHBOARD_STORAGE_SETTINGS,
             JSON.stringify(storageSettings),
         );
 
