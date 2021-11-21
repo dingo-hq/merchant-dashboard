@@ -1,25 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Draggable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
+import itemPlaceholder from '../../../../assets/item-placeholder.svg';
+import styles from './styles.module.css';
 
-const Item = ({ name, id, index }) => {
+const Item = ({ id, name, description, imageUrl, selected, onClick }) => {
+    const imgSrc = imageUrl || itemPlaceholder;
+
     return (
-        <Draggable draggableId={id} index={index}>
-            {(provided) => (
-                <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                >
-                    {name}
-                </li>
-            )}
-        </Draggable>
+        <li
+            className={classNames(styles.card, selected && styles.selected)}
+            onClick={() => onClick(id)}
+        >
+            <img src={imgSrc} className={styles.image} />
+            <div className={styles.content}>
+                <div className={styles.info}>
+                    <h2 className={styles.name}>{name}</h2>
+                    <p className={styles.description}>{description}</p>
+                </div>
+            </div>
+        </li>
     );
 };
 
 Item.propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    imageUrl: PropTypes.string,
+    selected: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
+
+Item.defaultProps = {
+    description: '',
+    imageUrl: '',
 };
 
 export default Item;
