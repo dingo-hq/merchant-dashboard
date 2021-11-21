@@ -7,7 +7,13 @@ import logo from '../../assets/logo.png';
 import { APP_LOGOUT_URL } from '../../constants/urls';
 import styles from './styles.module.css';
 
-const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {
+const Navigation = ({
+    navItems,
+    dashboardItems,
+    showLogOut,
+    edgeShadow,
+    onNavItemClick,
+}) => {
     const history = useHistory();
     const location = useLocation();
     const { pathname } = location;
@@ -30,13 +36,14 @@ const Navigation = ({ navItems, dashboardItems, showLogOut, edgeShadow }) => {
         </Button>
     ));
 
-    const pageNavItems = navItems.map(({ icon, label }) => (
+    const pageNavItems = navItems.map(({ icon, label, targetRef }) => (
         <Button
             key={label}
             size="large"
             appearance="minimal"
             className={styles.item}
             iconBefore={icon}
+            onClick={() => onNavItemClick(targetRef)}
         >
             {label}
         </Button>
@@ -88,6 +95,7 @@ Navigation.propTypes = {
     ),
     showLogOut: PropTypes.bool,
     edgeShadow: PropTypes.bool,
+    onNavItemClick: PropTypes.func,
 };
 
 Navigation.defaultProps = {
@@ -95,6 +103,7 @@ Navigation.defaultProps = {
     dashboardItems: [],
     showLogOut: true,
     edgeShadow: true,
+    onNavItemClick: () => {},
 };
 
 export default Navigation;

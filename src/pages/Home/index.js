@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GridViewIcon, PropertiesIcon, ShopIcon } from 'evergreen-ui';
 import classNames from 'classnames';
@@ -15,20 +15,18 @@ import isUnauthorized from '../../utils/isUnauthorized';
 import collagePhoto from '../../assets/collage.png';
 import styles from './styles.module.css';
 
-const navItems = [
-    {
-        icon: ShopIcon,
-        label: 'How it Works',
-    },
-    {
-        icon: PropertiesIcon,
-        label: 'Features',
-    },
-];
-
 const Home = () => {
     const history = useHistory();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const howItWorksEl = useRef(null);
+
+    const navItems = [
+        {
+            icon: ShopIcon,
+            label: 'How it Works',
+            targetRef: howItWorksEl,
+        },
+    ];
 
     useEffect(async () => {
         try {
@@ -40,6 +38,10 @@ const Home = () => {
             }
         }
     }, []);
+
+    const scrollToRef = (clickedRef) => {
+        clickedRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const defaultCta = {
         onClick: () => {
@@ -72,7 +74,11 @@ const Home = () => {
     return (
         <section className={styles.container}>
             <header>
-                <Navigation navItems={navItems} showLogOut={isAuthenticated} />
+                <Navigation
+                    navItems={navItems}
+                    showLogOut={isAuthenticated}
+                    onNavItemClick={scrollToRef}
+                />
             </header>
             <section className={styles.landing}>
                 <div
@@ -132,7 +138,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className={styles.how}>
+            <section className={styles.how} ref={howItWorksEl}>
                 <div
                     className={classNames(
                         styles.contentContainer,
