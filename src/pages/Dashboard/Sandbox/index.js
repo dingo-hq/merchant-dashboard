@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'evergreen-ui';
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
-import ItemsList from './ItemsList';
+import ItemsGrid from './ItemsGrid';
 import styles from './styles.module.css';
 
 const Sandbox = ({ pageName }) => {
@@ -13,9 +13,7 @@ const Sandbox = ({ pageName }) => {
 
     useEffect(async () => {
         try {
-            const { catalogItems } = await getCatalogItems({
-                recommended: true,
-            });
+            const { catalogItems } = await getCatalogItems();
 
             setRecommendedItems(catalogItems);
         } catch {}
@@ -26,7 +24,12 @@ const Sandbox = ({ pageName }) => {
     };
 
     const simulateButton = (
-        <Button appearance="primary" size="large" disabled={isSimulateDisabled}>
+        <Button
+            appearance="primary"
+            size="large"
+            disabled={isSimulateDisabled}
+            className={styles.simulate}
+        >
             Simulate {selectedItemsCount} selected items
         </Button>
     );
@@ -34,11 +37,11 @@ const Sandbox = ({ pageName }) => {
     return (
         <DashboardPage
             heading={pageName}
-            subheading="Simulate and preview how items are recommended to customers"
+            subheading="Select items below to simulate and preview how items are recommended to customers"
             sideElement={simulateButton}
         >
             <section className={styles.container}>
-                <ItemsList
+                <ItemsGrid
                     items={recommendedItems}
                     onChange={handleItemsChange}
                 />

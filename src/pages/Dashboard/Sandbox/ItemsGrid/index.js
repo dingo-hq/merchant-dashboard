@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 import Item from '../Item';
 import styles from './styles.module.css';
 
-const ItemsList = ({ items, onChange }) => {
+const ItemsGrid = ({ items, onChange }) => {
     const [isItemSelected, setIsItemSelected] = useState({});
+
+    useEffect(() => {
+        items.forEach(({ squareId }) => {
+            setIsItemSelected((prevSelectedItems) => ({
+                ...prevSelectedItems,
+                [squareId]: false,
+            }));
+        });
+    }, [items]);
 
     useEffect(() => {
         const selectedItems = Object.keys(isItemSelected).filter(
@@ -38,9 +47,9 @@ const ItemsList = ({ items, onChange }) => {
     );
 };
 
-ItemsList.propTypes = {
+ItemsGrid.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onChange: PropTypes.func.isRequired,
 };
 
-export default ItemsList;
+export default ItemsGrid;

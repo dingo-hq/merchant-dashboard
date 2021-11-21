@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: row;
     gap: 16px;
+    transition: all ease 250ms;
 }
 
 .card:hover {
@@ -15,8 +16,7 @@
 }
 
 .selected {
-    border: 2px solid #101840;
-    padding: calc(16px - 2px);
+    background-color: #D6E0FF;
 }
 
 .content {
