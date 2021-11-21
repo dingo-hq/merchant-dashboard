@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StatusIndicator } from 'evergreen-ui';
 import PropTypes from 'prop-types';
 import Section from '../../../components/Section';
-import StatsCardList from '../../../components/StatsCardList';
 import LineGraph from '../../../components/LineGraph';
 import DashboardPage from '../../../components/DashboardPage';
 import getStatistics from '../../../api/getStatistics';
 import OverlaySpinner from '../../../components/OverlaySpinner';
+import StatsCardList from './StatsCardList';
 import styles from './styles.module.css';
 
 const statusContent = {

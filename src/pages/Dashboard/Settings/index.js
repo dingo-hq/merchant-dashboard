@@ -10,7 +10,6 @@ import priceTag from '../../../assets/price-tag-circle.svg';
 import shoppingsBags from '../../../assets/shopping-bags-circle.svg';
 import {
     PAUSED,
-    DISCOUNT_ENABLED,
     PROMOTIONAL_DISCOUNT_TYPE,
     LOYALTY_POINTS,
     PERCENTAGE_DISCOUNT,
@@ -25,11 +24,6 @@ const promotionalDiscountTypes = {
 };
 
 const toggles = [
-    {
-        name: DISCOUNT_ENABLED,
-        label: 'Send recommendation discounts',
-        note: 'Control whether or not you want Dingo to send discounts towards recommended items',
-    },
     {
         name: DISABLE_RECOMMENDATION_CATALOG_WARNINGS,
         label: 'Turn off recommendation catalog warning messages',
