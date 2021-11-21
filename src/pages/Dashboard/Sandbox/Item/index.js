@@ -4,12 +4,24 @@ import classNames from 'classnames';
 import itemPlaceholder from '../../../../assets/item-placeholder.svg';
 import styles from './styles.module.css';
 
-const Item = ({ id, name, description, imageUrl, selected, onClick }) => {
+const Item = ({
+    id,
+    name,
+    description,
+    imageUrl,
+    selected,
+    onClick,
+    disablePointerInteractions,
+}) => {
     const imgSrc = imageUrl || itemPlaceholder;
 
     return (
         <li
-            className={classNames(styles.card, selected && styles.selected)}
+            className={classNames(
+                styles.card,
+                selected && styles.selected,
+                disablePointerInteractions && styles.disablePointerInteractions,
+            )}
             onClick={() => onClick(id)}
         >
             <img src={imgSrc} className={styles.image} />
@@ -29,12 +41,15 @@ Item.propTypes = {
     description: PropTypes.string,
     imageUrl: PropTypes.string,
     selected: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    disablePointerInteractions: PropTypes.bool,
 };
 
 Item.defaultProps = {
     description: '',
     imageUrl: '',
+    onClick: () => {},
+    disablePointerInteractions: false,
 };
 
 export default Item;

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, EmptyState, ShopIcon } from 'evergreen-ui';
+import {
+    Button,
+    EmptyState,
+    PlayIcon,
+    ResetIcon,
+    ShopIcon,
+} from 'evergreen-ui';
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
 import OverlaySpinner from '../../../components/OverlaySpinner';
@@ -15,6 +21,10 @@ const Sandbox = ({ pageName }) => {
     const [isSimulating, setIsSimulating] = useState(false);
     const [simulationResults, setSimulationResults] = useState(null);
     const isSimulateDisabled = selectedItemsCount === 0 || isSimulating;
+
+    const pageSubheading = simulationResults
+        ? 'These are your potential recommended items based on the items you selected'
+        : 'Select items below to simulate and preview what items could be recommended to customers';
 
     useEffect(async () => {
         try {
@@ -46,6 +56,12 @@ const Sandbox = ({ pageName }) => {
         }
     };
 
+    const handleResetClick = (e) => {
+        e.preventDefault();
+
+        setSimulationResults(null);
+    };
+
     const simulateButton = (
         <Button
             appearance="primary"
@@ -54,10 +70,26 @@ const Sandbox = ({ pageName }) => {
             className={styles.simulate}
             onClick={handleSimulateClick}
             isLoading={isSimulating}
+            iconBefore={PlayIcon}
         >
             Simulate {selectedItemsCount} selected items
         </Button>
     );
+
+    const resetButton = (
+        <Button
+            appearance="primary"
+            intent="danger"
+            size="large"
+            className={styles.reset}
+            onClick={handleResetClick}
+            iconBefore={ResetIcon}
+        >
+            Start over
+        </Button>
+    );
+
+    const actionButton = simulationResults ? resetButton : simulateButton;
 
     const renderContent = () => {
         if (merchantItems.length === 0) {
@@ -75,7 +107,8 @@ const Sandbox = ({ pageName }) => {
         }
 
         if (simulationResults) {
-            return <Results />;
+            console.log('Got simulation results', simulationResults);
+            return <Results results={simulationResults} />;
         }
 
         return <ItemsGrid items={merchantItems} onChange={handleItemsChange} />;
@@ -84,8 +117,8 @@ const Sandbox = ({ pageName }) => {
     return (
         <DashboardPage
             heading={pageName}
-            subheading="Select items below to simulate and preview what items could be recommended to customers"
-            sideElement={simulateButton}
+            subheading={pageSubheading}
+            sideElement={actionButton}
         >
             <section className={styles.container}>{renderContent()}</section>
             <OverlaySpinner isShown={isLoading} />

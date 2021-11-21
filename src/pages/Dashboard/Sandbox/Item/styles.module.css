@@ -54,3 +54,11 @@
     border-radius: 8px;
     height: 112px;
 }
+
+.disablePointerInteractions {
+    pointer-events: none;
+}
+
+.disablePointerInteractions:hover {
+    cursor: initial;
+}
