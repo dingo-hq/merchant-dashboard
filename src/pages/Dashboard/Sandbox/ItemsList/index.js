@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Item from '../Item';
 import styles from './styles.module.css';
 
-const ItemsList = ({ items }) => {
-    const [selectedItems, setSelectedItems] = useState({});
+const ItemsList = ({ items, onChange }) => {
+    const [isItemSelected, setIsItemSelected] = useState({});
+
+    useEffect(() => {
+        const selectedItems = Object.keys(isItemSelected).filter(
+            (itemId) => isItemSelected[itemId],
+        );
+
+        onChange(selectedItems);
+    }, [isItemSelected]);
 
     const handleItemClick = (id) => {
-        setSelectedItems((prevSelectedItems) => ({
+        setIsItemSelected((prevSelectedItems) => ({
             ...prevSelectedItems,
             [id]: !prevSelectedItems[id],
         }));
@@ -21,7 +29,7 @@ const ItemsList = ({ items }) => {
                     id={squareId}
                     name={name}
                     onClick={handleItemClick}
-                    selected={selectedItems[squareId]}
+                    selected={isItemSelected[squareId]}
                     imageUrl={itemInfo.imageData?.url}
                     description={itemInfo.itemData?.description}
                 />
@@ -32,6 +40,7 @@ const ItemsList = ({ items }) => {
 
 ItemsList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onChange: PropTypes.func.isRequired,
 };
 
 export default ItemsList;
