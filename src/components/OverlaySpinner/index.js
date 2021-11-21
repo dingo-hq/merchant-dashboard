@@ -12,7 +12,7 @@ const OverlaySpinner = ({ isShown }) => {
             preventBodyScrolling
         >
             <div className={styles.spinnerContainer}>
-                <Spinner size={64} />
+                {isShown && <Spinner size={64} />}
             </div>
         </Overlay>
     );

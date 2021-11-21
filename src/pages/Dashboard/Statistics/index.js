@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusIndicator } from 'evergreen-ui';
 import PropTypes from 'prop-types';
 import Section from '../../../components/Section';
 import StatsCardList from '../../../components/StatsCardList';
 import LineGraph from '../../../components/LineGraph';
 import DashboardPage from '../../../components/DashboardPage';
+import getStatistics from '../../../api/getStatistics';
+import OverlaySpinner from '../../../components/OverlaySpinner';
 import styles from './styles.module.css';
 
+const statusContent = {
+    success: {
+        color: 'success',
+        text: 'Updated every 30 seconds',
+    },
+    error: {
+        color: 'danger',
+        text: 'Failed to update at this time',
+    },
+};
+
 const Statistics = ({ pageName }) => {
-    const statusContent = {
-        success: {
-            color: 'success',
-            text: 'Updated every 30 seconds',
-        },
-        error: {
-            color: 'danger',
-            text: 'Failed to update at this time',
-        },
-    };
+    const [isPageLoading, setIsPageLoading] = useState(false);
+    const [trendData, setTrendData] = useState(null);
+
+    useEffect(async () => {
+        try {
+            setIsPageLoading(true);
+            const { data } = await getStatistics();
+            setTrendData(data);
+        } catch {
+        } finally {
+            setIsPageLoading(false);
+        }
+    }, []);
 
     return (
         <DashboardPage
@@ -36,8 +52,9 @@ const Statistics = ({ pageName }) => {
                 <StatsCardList />
             </Section>
             <Section title="Trends">
-                <LineGraph />
+                <LineGraph trendData={trendData} />
             </Section>
+            <OverlaySpinner isShown={isPageLoading} />
         </DashboardPage>
     );
 };

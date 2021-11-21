@@ -1,78 +1,65 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import data from './data.json';
+import PropTypes from 'prop-types';
+import transformDataForLineGraph from '../../utils/transformDataForLineGraph';
 import styles from './styles.module.css';
 
-const MyResponsiveLine = () => (
-    <div className={styles.graph}>
-        <ResponsiveLine
-            data={data}
-            margin={{ top: 16, right: 128, bottom: 48, left: 48 }}
-            xScale={{ type: 'point' }}
-            yScale={{
-                type: 'linear',
-                min: 'auto',
-                max: 'auto',
-                stacked: true,
-                reverse: false,
-            }}
-            yFormat=" >-.2f"
-            curve="natural"
-            axisTop={null}
-            axisRight={null}
-            axisBottom={{
-                orient: 'bottom',
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'transportation',
-                legendOffset: 36,
-                legendPosition: 'middle',
-            }}
-            axisLeft={{
-                orient: 'left',
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'count',
-                legendOffset: -40,
-                legendPosition: 'middle',
-            }}
-            pointSize={10}
-            pointColor={{ theme: 'background' }}
-            pointBorderWidth={2}
-            pointBorderColor={{ from: 'serieColor' }}
-            pointLabelYOffset={-12}
-            useMesh={true}
-            legends={[
-                {
-                    anchor: 'bottom-right',
-                    direction: 'column',
-                    justify: false,
-                    translateX: 100,
-                    translateY: 0,
-                    itemsSpacing: 0,
-                    itemDirection: 'left-to-right',
-                    itemWidth: 80,
-                    itemHeight: 20,
-                    itemOpacity: 0.75,
-                    symbolSize: 12,
-                    symbolShape: 'circle',
-                    symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                    effects: [
-                        {
-                            on: 'hover',
-                            style: {
-                                itemBackground: 'rgba(0, 0, 0, .03)',
-                                itemOpacity: 1,
-                            },
-                        },
-                    ],
-                },
-            ]}
-            theme={{ fontFamily: 'Sharp Grotesk' }}
-        />
-    </div>
-);
+const LineGraph = ({ trendData }) => {
+    console.log('got this trend data', trendData);
+    if (!trendData) return null;
 
-export default MyResponsiveLine;
+    const transformedData = transformDataForLineGraph(trendData);
+    console.log('using this transformed data', transformedData);
+
+    return (
+        <section className={styles.graph}>
+            <ResponsiveLine
+                data={[transformedData]}
+                margin={{ top: 24, right: 32, bottom: 48, left: 48 }}
+                xScale={{ type: 'point' }}
+                yScale={{
+                    type: 'linear',
+                    min: 'auto',
+                    max: 'auto',
+                    stacked: true,
+                    reverse: false,
+                }}
+                yFormat=" >-.2f"
+                curve="cardinal"
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                    orient: 'bottom',
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: 'days',
+                    legendOffset: 36,
+                    legendPosition: 'middle',
+                }}
+                axisLeft={{
+                    orient: 'left',
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: 'count',
+                    legendOffset: -40,
+                    legendPosition: 'middle',
+                }}
+                pointSize={10}
+                pointBorderWidth={2}
+                pointBorderColor={{ from: 'serieColor' }}
+                pointLabelYOffset={-12}
+                useMesh={true}
+                theme={{ fontFamily: 'Sharp Grotesk' }}
+                motionConfig="gentle"
+            />
+        </section>
+    );
+};
+
+LineGraph.propTypes = {
+    trendData: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default LineGraph;
