@@ -13,10 +13,11 @@
 
 .card:hover {
     cursor: pointer;
+    background-color: #F3F6FF;
 }
 
 .selected {
-    background-color: #D6E0FF;
+    background-color: #D6E0FF !important;
 }
 
 .content {

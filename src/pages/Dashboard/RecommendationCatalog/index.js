@@ -213,7 +213,7 @@ const RecommendationCatalog = ({ pageName }) => {
                         Recommendations Enabled
                     </Table.HeaderCell>
                 </Table.Head>
-                <Table.Body height="58vh">{renderTableBody()}</Table.Body>
+                <Table.Body maxHeight="58vh">{renderTableBody()}</Table.Body>
             </Table>
             <Dialog
                 isShown={itemToBeDisabled}
