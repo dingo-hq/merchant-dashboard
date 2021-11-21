@@ -140,11 +140,11 @@ const RecommendationCatalog = ({ pageName }) => {
             return (
                 <EmptyState
                     background="light"
-                    title="Your recommendation catalog is empty"
+                    title="You don't have any items"
                     orientation="horizontal"
                     icon={<InboxIcon color="#C1C4D6" />}
                     iconBgColor="#EDEFF5"
-                    description="Add items from your existing catalog to see them here!"
+                    description="Add items to your Square dashboard to see them here!"
                 />
             );
         }
