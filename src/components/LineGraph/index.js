@@ -1,6 +1,7 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import PropTypes from 'prop-types';
+import { EmptyState, ShopIcon } from 'evergreen-ui';
 import transformDataForLineGraph from '../../utils/transformDataForLineGraph';
 import styles from './styles.module.css';
 
@@ -11,8 +12,21 @@ const LineGraph = ({ trendData }) => {
     const transformedData = transformDataForLineGraph(trendData);
     console.log('using this transformed data', transformedData);
 
-    return (
-        <section className={styles.graph}>
+    const renderContent = () => {
+        if (trendData.length === 0) {
+            return (
+                <EmptyState
+                    background={null}
+                    title="No data found"
+                    orientation="vertical"
+                    icon={<ShopIcon color="#C1C4D6" />}
+                    iconBgColor="#EDEFF5"
+                    description="We currently don't have enough data to display here, come back later!"
+                />
+            );
+        }
+
+        return (
             <ResponsiveLine
                 data={[transformedData]}
                 margin={{ top: 24, right: 32, bottom: 48, left: 48 }}
@@ -54,8 +68,10 @@ const LineGraph = ({ trendData }) => {
                 theme={{ fontFamily: 'Sharp Grotesk' }}
                 motionConfig="gentle"
             />
-        </section>
-    );
+        );
+    };
+
+    return <section className={styles.graph}>{renderContent()}</section>;
 };
 
 LineGraph.propTypes = {

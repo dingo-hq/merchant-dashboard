@@ -32,10 +32,10 @@ const Statistics = ({ pageName }) => {
             heading={pageName}
             subheading="Take a peek at some numbers and see how you're doing at a quick glance"
         >
-            <Section title="Some numbers">
+            <Section title="Numbers">
                 <StatsCardList data={numbersData} />
             </Section>
-            <Section title="Trends">
+            <Section title="Promotion redemptions over time">
                 <LineGraph trendData={trendData} />
             </Section>
             <OverlaySpinner isShown={isPageLoading} />
