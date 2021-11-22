@@ -53,7 +53,7 @@ const Sandbox = ({ pageName }) => {
             const { data } = await simulateRecommendations(selectedItemIds);
             const { recommendations } = data;
 
-            setSimulationResults(recommendations.slice(0, 3));
+            setSimulationResults(recommendations.slice(0, 4));
         } catch {
         } finally {
             setIsSimulating(false);
