@@ -10,6 +10,7 @@ import {
 import DashboardPage from '../../../components/DashboardPage';
 import getCatalogItems from '../../../api/getCatalogItems';
 import OverlaySpinner from '../../../components/OverlaySpinner';
+import simulateRecommendations from '../../../api/simulateRecommendations';
 import ItemsGrid from './ItemsGrid';
 import styles from './styles.module.css';
 import Results from './Results';
@@ -20,6 +21,7 @@ const Sandbox = ({ pageName }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSimulating, setIsSimulating] = useState(false);
     const [simulationResults, setSimulationResults] = useState(null);
+    const [selectedItemIds, setSelectedItemIds] = useState([]);
     const isSimulateDisabled = selectedItemsCount === 0 || isSimulating;
 
     const pageSubheading = simulationResults
@@ -38,8 +40,9 @@ const Sandbox = ({ pageName }) => {
         }
     }, []);
 
-    const handleItemsChange = (items) => {
-        setSelectedItemsCount(items.length);
+    const handleItemsChange = (itemIds) => {
+        setSelectedItemsCount(itemIds.length);
+        setSelectedItemIds(itemIds);
     };
 
     const handleSimulateClick = async (e) => {
@@ -47,9 +50,10 @@ const Sandbox = ({ pageName }) => {
 
         try {
             setIsSimulating(true);
-            const { catalogItems } = await getCatalogItems();
+            const { data } = await simulateRecommendations(selectedItemIds);
+            const { recommendations } = data;
 
-            setSimulationResults(catalogItems.slice(0, 3));
+            setSimulationResults(recommendations.slice(0, 3));
         } catch {
         } finally {
             setIsSimulating(false);

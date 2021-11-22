@@ -11,15 +11,15 @@ const labels = {
     linkClickThroughRate: 'Recommendation link click through rate',
     orderedByRecommendedRate: 'Promotion redemption rate',
     totalTimesOrderedByRecommended: 'Total promotions redeemed',
-    totalTimesRecommended: 'Total recommendations given',
+    totalRecommendationsSent: 'Total recommendation links sent',
 };
 
 const StatsCardList = ({ data }) => {
     return (
         <ul className={styles.list}>
             <StatsCard
-                number={data?.totalTimesRecommended}
-                label={labels.totalTimesRecommended}
+                number={data?.totalRecommendationsSent}
+                label={labels.totalRecommendationsSent}
                 icon={hashtagIcon}
             />
             <StatsCard
