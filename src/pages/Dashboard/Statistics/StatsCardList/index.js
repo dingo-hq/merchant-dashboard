@@ -28,12 +28,18 @@ const StatsCardList = ({ data }) => {
                 icon={boxIcon}
             />
             <StatsCard
-                number={data?.orderedByRecommendedRate}
+                number={
+                    data?.orderedByRecommendedRate &&
+                    parseFloat(data?.orderedByRecommendedRate).toFixed(2)
+                }
                 label={labels.orderedByRecommendedRate}
                 icon={handshakeIcon}
             />
             <StatsCard
-                number={data?.linkClickThroughRate}
+                number={
+                    data?.linkClickThroughRate &&
+                    parseFloat(data?.linkClickThroughRate).toFixed(2)
+                }
                 label={labels.linkClickThroughRate}
                 icon={clicksIcon}
             />
