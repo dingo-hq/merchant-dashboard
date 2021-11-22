@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { GridViewIcon, PropertiesIcon, ShopIcon } from 'evergreen-ui';
+import { GridViewIcon, HandIcon, ShopIcon } from 'evergreen-ui';
 import classNames from 'classnames';
 import Navigation from '../../components/Navigation';
 import PrimaryButton from '../../components/PrimaryButton';
@@ -18,11 +18,19 @@ import styles from './styles.module.css';
 const Home = () => {
     const history = useHistory();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Create a ref for each nav item for scroll-to functionality
     const howItWorksEl = useRef(null);
+    const missionEl = useRef(null);
 
     const navItems = [
         {
             icon: ShopIcon,
+            label: 'What We Do',
+            targetRef: missionEl,
+        },
+        {
+            icon: HandIcon,
             label: 'How it Works',
             targetRef: howItWorksEl,
         },
@@ -40,7 +48,11 @@ const Home = () => {
     }, []);
 
     const scrollToRef = (clickedRef) => {
-        clickedRef.current.scrollIntoView({ behavior: 'smooth' });
+        clickedRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest',
+        });
     };
 
     const defaultCta = {
@@ -107,7 +119,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className={styles.mission}>
+            <section className={styles.mission} ref={missionEl}>
                 <div
                     className={classNames(
                         styles.contentContainer,

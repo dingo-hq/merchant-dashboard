@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Item from '../Item';
-import foodImage from '../../../../assets/sandbox-results-background.svg';
 import styles from './styles.module.css';
 
 const Results = ({ results }) => {
@@ -20,7 +19,6 @@ const Results = ({ results }) => {
                     />
                 ))}
             </ul>
-            <img className={styles.image} src={foodImage} />
         </section>
     );
 };
