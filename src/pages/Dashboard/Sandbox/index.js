@@ -76,7 +76,8 @@ const Sandbox = ({ pageName }) => {
             isLoading={isSimulating}
             iconBefore={PlayIcon}
         >
-            Simulate {selectedItemsCount} selected items
+            Simulate {selectedItemsCount} selected{' '}
+            {selectedItemsCount === 1 ? 'item' : 'items'}
         </Button>
     );
 
