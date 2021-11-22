@@ -23,12 +23,15 @@ const statusContent = {
 const Statistics = ({ pageName }) => {
     const [isPageLoading, setIsPageLoading] = useState(false);
     const [trendData, setTrendData] = useState(null);
+    const [numbersData, setNumbersData] = useState(null);
 
     useEffect(async () => {
         try {
             setIsPageLoading(true);
-            const { data } = await getStatistics();
-            setTrendData(data);
+            const { countByDay, numbers } = await getStatistics();
+
+            setTrendData(countByDay);
+            setNumbersData(numbers);
         } catch {
         } finally {
             setIsPageLoading(false);
@@ -48,8 +51,8 @@ const Statistics = ({ pageName }) => {
                 </StatusIndicator>
             }
         >
-            <Section title="Today's numbers">
-                <StatsCardList />
+            <Section title="Some numbers">
+                <StatsCardList data={numbersData} />
             </Section>
             <Section title="Trends">
                 <LineGraph trendData={trendData} />

@@ -5,12 +5,14 @@ import styles from './styles.module.css';
 const missingNumber = '--';
 
 const StatsCard = ({ number, label, icon }) => {
+    const numberText = number !== null ? number : missingNumber;
+
     return (
         <li className={styles.card}>
             <img className={styles.icon} src={icon} />
             <div className={styles.metadata}>
                 <p className={styles.label}>{label}</p>
-                <span className={styles.number}>{number}</span>
+                <span className={styles.number}>{numberText}</span>
             </div>
         </li>
     );
