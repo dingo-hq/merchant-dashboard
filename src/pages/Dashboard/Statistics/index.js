@@ -9,17 +9,6 @@ import OverlaySpinner from '../../../components/OverlaySpinner';
 import StatsCardList from './StatsCardList';
 import styles from './styles.module.css';
 
-const statusContent = {
-    success: {
-        color: 'success',
-        text: 'Updated every 30 seconds',
-    },
-    error: {
-        color: 'danger',
-        text: 'Failed to update at this time',
-    },
-};
-
 const Statistics = ({ pageName }) => {
     const [isPageLoading, setIsPageLoading] = useState(false);
     const [trendData, setTrendData] = useState(null);
@@ -42,14 +31,6 @@ const Statistics = ({ pageName }) => {
         <DashboardPage
             heading={pageName}
             subheading="Take a peek at some numbers and see how you're doing at a quick glance"
-            sideElement={
-                <StatusIndicator
-                    color={statusContent.success.color}
-                    className={styles.status}
-                >
-                    {statusContent.success.text}
-                </StatusIndicator>
-            }
         >
             <Section title="Some numbers">
                 <StatsCardList data={numbersData} />
